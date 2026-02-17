@@ -172,11 +172,15 @@ input,select,textarea,button{font-family:inherit}
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('personal')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-      Mensaje Personalizado
+      Personalizado
     </button>
     <button class="tab-btn" onclick="switchTab('masivo')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Mensaje Masivo
+      Masivo
+    </button>
+    <button class="tab-btn" onclick="switchTab('renovacion')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      Renovaci&oacute;n Premium
     </button>
   </div>
 
@@ -394,6 +398,76 @@ input,select,textarea,button{font-family:inherit}
     </div>
   </div><!-- end tab-masivo -->
 
+  <!-- TAB 3: Renovacion Premium -->
+  <div class="tab-content" id="tab-renovacion">
+    <div class="mass-layout">
+      <div class="panel">
+        <div class="panel-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Renovaci&oacute;n de Plan Premium
+        </div>
+        <div class="panel-sub">Para clientes que YA tienen plan Premium y renuevan para obtener equipo</div>
+
+        <div class="mass-info" style="background:rgba(139,92,246,0.06);border-color:rgba(139,92,246,0.12)">
+          <div class="info-icon">💎</div>
+          <div class="info-text"><b>Cliente Premium existente.</b> El plan se mantiene igual, el beneficio es el equipo: sin costo o financiado con descuentos.</div>
+        </div>
+
+        <div class="field">
+          <label>Nombre del cliente (dejar vacio para masivo)</label>
+          <input type="text" id="renName" placeholder="Ej. Juan Perez (opcional)">
+        </div>
+        <div class="field">
+          <label>Plan Premium actual del cliente</label>
+          <select id="renPlan">
+            <option value="">Seleccionar plan Premium...</option>
+            <option value="AT&T Azul 2">AT&T Azul 2 &mdash; $419/mes &mdash; 8 GB</option>
+            <option value="AT&T Azul 3">AT&T Azul 3 &mdash; $529/mes &mdash; 12 GB</option>
+            <option value="AT&T Plata">AT&T Plata &mdash; $629/mes &mdash; 25 GB</option>
+            <option value="AT&T Oro">AT&T Oro &mdash; $699/mes &mdash; 40 GB</option>
+            <option value="AT&T Black">AT&T Black &mdash; $799/mes &mdash; 45 GB</option>
+            <option value="AT&T Platino">AT&T Platino &mdash; $999/mes &mdash; 50 GB</option>
+            <option value="AT&T Diamante">AT&T Diamante &mdash; $1,259/mes &mdash; 50 GB</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Tu nombre (agente)</label>
+          <input type="text" id="renAgent" placeholder="Ej. Carlos (opcional)">
+        </div>
+
+        <div class="scenario-label" style="font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;margin-top:16px">Tipo de mensaje</div>
+        <button class="mass-scenario-btn active" data-ren-scenario="primer_contacto" onclick="selectRenScenario(this)">
+          <span class="emoji">👋</span> Primer contacto
+        </button>
+        <button class="mass-scenario-btn" data-ren-scenario="seguimiento" onclick="selectRenScenario(this)">
+          <span class="emoji">🔄</span> Seguimiento
+        </button>
+        <button class="mass-scenario-btn" data-ren-scenario="equipo" onclick="selectRenScenario(this)">
+          <span class="emoji">📱</span> Enfocado en equipo
+        </button>
+        <button class="mass-scenario-btn" data-ren-scenario="urgencia" onclick="selectRenScenario(this)">
+          <span class="emoji">🔥</span> Urgencia / cierre
+        </button>
+
+        <button class="btn-generate" onclick="generateRenMessages()" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+          Generar Mensaje de Renovaci&oacute;n
+        </button>
+      </div>
+
+      <!-- Renovation Results -->
+      <div class="results" id="ren-results">
+        <div class="results-empty">
+          <div class="icon" style="background:rgba(139,92,246,0.08)">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--purple)"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Renovaciones Premium</h3>
+          <p>Para clientes que ya tienen plan Premium. Genera mensajes enfocados en el equipo sin costo o con descuento al renovar.</p>
+        </div>
+      </div>
+    </div>
+  </div><!-- end tab-renovacion -->
+
 </div>
 
 <!-- Toast -->
@@ -403,929 +477,916 @@ input,select,textarea,button{font-family:inherit}
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-// PLAN DATABASE
-// ═══════════════════════════════════════════════════════════════
-const PLANS = {
-  "Con Todo 399": {renta:434,gb:2,type:"contodo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Con Todo 499": {renta:534,gb:3,type:"contodo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Con Todo 549": {renta:584,gb:5,type:"contodo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Con Todo 599": {renta:634,gb:6,type:"contodo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Con Todo 699": {renta:744,gb:6,type:"contodo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Con Todo 799": {renta:844,gb:8,type:"contodo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Con Todo 999": {renta:1044,gb:10,type:"contodo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Consiguelo 2": {renta:404,gb:2,type:"consiguelo",benefits:"Apps ilimitadas + streaming + llamadas"},
-  "Consiguelo 3": {renta:541,gb:3,type:"consiguelo",benefits:"Apps ilimitadas + streaming + llamadas"},
-  "Consiguelo 5": {renta:667,gb:5,type:"consiguelo",benefits:"Apps ilimitadas + streaming + llamadas"},
-  "Consiguelo 6.5":{renta:772,gb:6.5,type:"consiguelo",benefits:"Apps ilimitadas + streaming + llamadas"},
-  "Consiguelo 8": {renta:887,gb:8,type:"consiguelo",benefits:"Apps ilimitadas + streaming + llamadas"},
-  "Consiguelo 10": {renta:992,gb:10,type:"consiguelo",benefits:"Apps ilimitadas + streaming + llamadas"},
-  "Consiguelo 13": {renta:1202,gb:13,type:"consiguelo",benefits:"Apps ilimitadas + streaming + llamadas"},
-  "Consiguelo 20": {renta:1853,gb:20,type:"consiguelo",benefits:"Apps ilimitadas + streaming + llamadas"},
-  "Armalo 5":  {renta:419,gb:5,type:"armalo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Armalo 8":  {renta:524,gb:8,type:"armalo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Armalo 9":  {renta:629,gb:9,type:"armalo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Armalo 10": {renta:629,gb:10,type:"armalo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Armalo 11": {renta:681,gb:11,type:"armalo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Armalo 12": {renta:681,gb:12,type:"armalo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Armalo 14": {renta:786,gb:14,type:"armalo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Armalo 17": {renta:891,gb:17,type:"armalo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Armalo 20": {renta:996,gb:20,type:"armalo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Armalo 26": {renta:1101,gb:26,type:"armalo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
-  "Armalo 40": {renta:1574,gb:40,type:"armalo",benefits:"Llamadas, mensajes y redes sociales ilimitadas"},
+// ================================================================
+// PLAN DATABASE - Safari iOS compatible (no template literals)
+// ================================================================
+var PLANS = {
+  "Con Todo 399": {renta:434,gb:2,type:"contodo"},
+  "Con Todo 499": {renta:534,gb:3,type:"contodo"},
+  "Con Todo 549": {renta:584,gb:5,type:"contodo"},
+  "Con Todo 599": {renta:634,gb:6,type:"contodo"},
+  "Con Todo 699": {renta:744,gb:6,type:"contodo"},
+  "Con Todo 799": {renta:844,gb:8,type:"contodo"},
+  "Con Todo 999": {renta:1044,gb:10,type:"contodo"},
+  "Consiguelo 2": {renta:404,gb:2,type:"consiguelo"},
+  "Consiguelo 3": {renta:541,gb:3,type:"consiguelo"},
+  "Consiguelo 5": {renta:667,gb:5,type:"consiguelo"},
+  "Consiguelo 6.5":{renta:772,gb:6.5,type:"consiguelo"},
+  "Consiguelo 8": {renta:887,gb:8,type:"consiguelo"},
+  "Consiguelo 10": {renta:992,gb:10,type:"consiguelo"},
+  "Consiguelo 13": {renta:1202,gb:13,type:"consiguelo"},
+  "Consiguelo 20": {renta:1853,gb:20,type:"consiguelo"},
+  "Armalo 5":  {renta:419,gb:5,type:"armalo"},
+  "Armalo 8":  {renta:524,gb:8,type:"armalo"},
+  "Armalo 9":  {renta:629,gb:9,type:"armalo"},
+  "Armalo 10": {renta:629,gb:10,type:"armalo"},
+  "Armalo 11": {renta:681,gb:11,type:"armalo"},
+  "Armalo 12": {renta:681,gb:12,type:"armalo"},
+  "Armalo 14": {renta:786,gb:14,type:"armalo"},
+  "Armalo 17": {renta:891,gb:17,type:"armalo"},
+  "Armalo 20": {renta:996,gb:20,type:"armalo"},
+  "Armalo 26": {renta:1101,gb:26,type:"armalo"},
+  "Armalo 40": {renta:1574,gb:40,type:"armalo"}
 };
 
-const PREMIUM = {
-  "AT&T Azul 2": {renta:419,gb:8,benefits:"6 apps ilimitadas, 8 GB navegacion libre, llamadas y mensajes ilimitados a Mexico, EUA y Canada"},
-  "AT&T Azul 3": {renta:529,gb:12,benefits:"6 apps ilimitadas, 12 GB navegacion libre, llamadas y mensajes ilimitados a Mexico, EUA y Canada"},
-  "AT&T Plata":  {renta:629,gb:25,benefits:"6 apps ilimitadas, 25 GB navegacion libre, llamadas y mensajes ilimitados a Mexico, EUA y Canada"},
-  "AT&T Oro":    {renta:699,gb:40,benefits:"6 apps ilimitadas, 40 GB navegacion libre, llamadas y mensajes ilimitados a Mexico, EUA y Canada"},
-  "AT&T Black":  {renta:799,gb:45,benefits:"6 apps ilimitadas, 45 GB navegacion libre, llamadas y mensajes ilimitados a Mexico, EUA y Canada"},
-  "AT&T Diamante":{renta:1259,gb:50,benefits:"6 apps ilimitadas, 50 GB navegacion libre, llamadas y mensajes ilimitados a Mexico, EUA y Canada"},
-  "AT&T Platino": {renta:999,gb:50,benefits:"6 apps ilimitadas, 50 GB navegacion libre, llamadas y mensajes ilimitados a Mexico, EUA y Canada"},
+var PREMIUM = {
+  "AT&T Azul 2": {renta:419,gb:8},
+  "AT&T Azul 3": {renta:529,gb:12},
+  "AT&T Plata":  {renta:629,gb:25},
+  "AT&T Oro":    {renta:699,gb:40},
+  "AT&T Black":  {renta:799,gb:45},
+  "AT&T Platino": {renta:999,gb:50},
+  "AT&T Diamante":{renta:1259,gb:50}
 };
 
 function findBestPremium(renta, gb) {
-  // First try: find plans that give MORE gb AND cost same or less
-  let candidates = [];
-  for (const [name, p] of Object.entries(PREMIUM)) {
+  var candidates = [];
+  var keys = Object.keys(PREMIUM);
+  for (var k = 0; k < keys.length; k++) {
+    var name = keys[k];
+    var p = PREMIUM[name];
     if (p.gb > gb) {
-      const saving = renta - p.renta;
-      const gbGain = p.gb - gb;
-      candidates.push({ name, ...p, saving, gbGain, gbMultiple: (p.gb / gb).toFixed(1) });
+      candidates.push({name:name, renta:p.renta, gb:p.gb, saving:renta-p.renta, gbGain:p.gb-gb, gbMultiple:(p.gb/gb).toFixed(1)});
     }
   }
-
-  // Sort: prefer plans that save money AND give more data
-  // Priority: 1) saves money or costs similar, 2) most GB gain
   if (candidates.length > 0) {
-    candidates.sort((a, b) => {
-      // Both save money or both cost more
-      const aSaves = a.saving >= -50; // within $50 tolerance
-      const bSaves = b.saving >= -50;
-      if (aSaves && !bSaves) return -1;
-      if (!aSaves && bSaves) return 1;
-      // Among affordable ones, pick the best value (saving + gb gain)
-      const aScore = a.saving * 1.5 + a.gbGain * 5;
-      const bScore = b.saving * 1.5 + b.gbGain * 5;
-      return bScore - aScore;
+    candidates.sort(function(a,b) {
+      var aOK = a.saving >= -50 ? 1 : 0;
+      var bOK = b.saving >= -50 ? 1 : 0;
+      if (aOK !== bOK) return bOK - aOK;
+      return (b.saving*1.5+b.gbGain*5) - (a.saving*1.5+a.gbGain*5);
     });
     return candidates[0];
   }
-
-  // Fallback: closest in price even if fewer GB (shouldn't happen often)
-  let closest = null; let closestDiff = Infinity;
-  for (const [name, p] of Object.entries(PREMIUM)) {
-    const diff = Math.abs(p.renta - renta);
-    if (diff < closestDiff) { closestDiff = diff; closest = { name, ...p, saving: renta - p.renta, gbGain: p.gb - gb, gbMultiple: (p.gb / Math.max(gb, 1)).toFixed(1) }; }
+  var closest = null, closestDiff = 999999;
+  for (var k = 0; k < keys.length; k++) {
+    var name = keys[k], p = PREMIUM[name];
+    var diff = Math.abs(p.renta - renta);
+    if (diff < closestDiff) {
+      closestDiff = diff;
+      closest = {name:name, renta:p.renta, gb:p.gb, saving:renta-p.renta, gbGain:p.gb-gb, gbMultiple:(p.gb/Math.max(gb,1)).toFixed(1)};
+    }
   }
   return closest;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ================================================================
 // STATE
-// ═══════════════════════════════════════════════════════════════
-let selectedScenario = 'primer_contacto';
+// ================================================================
+var selectedScenario = "primer_contacto";
+var selectedMassScenario = "captacion";
 
 function selectScenario(btn) {
-  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  selectedScenario = btn.dataset.scenario;
+  var btns = document.querySelectorAll(".scenario-btn");
+  for (var i=0;i<btns.length;i++) btns[i].classList.remove("active");
+  btn.classList.add("active");
+  selectedScenario = btn.getAttribute("data-scenario");
+}
+function selectMassScenario(btn) {
+  var btns = document.querySelectorAll(".mass-scenario-btn");
+  for (var i=0;i<btns.length;i++) btns[i].classList.remove("active");
+  btn.classList.add("active");
+  selectedMassScenario = btn.getAttribute("data-mass-scenario");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// MESSAGE TEMPLATES
-// ═══════════════════════════════════════════════════════════════
+// ================================================================
+// HELPER: build message line by line (Safari safe)
+// ================================================================
+function L() {
+  // Join all arguments with newline
+  var parts = [];
+  for (var i = 0; i < arguments.length; i++) parts.push(arguments[i]);
+  return parts.join("\n");
+}
+
+// ================================================================
+// PRE-COMPUTE phrases from data
+// ================================================================
+function makeCtx(planName, planType, renta, gb, premium, firstName, agent) {
+  var c = {};
+  c.planName = planName;
+  c.planType = planType;
+  c.renta = renta;
+  c.gb = gb;
+  c.pName = premium.name;
+  c.pRenta = premium.renta;
+  c.pGb = premium.gb;
+  c.saving = premium.saving;
+  c.gbMult = premium.gbMultiple;
+  c.savingYear = Math.abs(premium.saving) * 12;
+  c.saves = premium.saving > 0;
+  c.same = premium.saving === 0;
+  c.firstName = firstName || "";
+  c.agent = agent || "tu asesor";
+  c.planLabel = planType === "contodo" ? "Con Todo" : planType === "consiguelo" ? "Consiguelo" : "Armalo";
+  
+  // Pre-build conditional phrases
+  c.pagarias = c.saves ? "pagando *$" + c.saving + " menos*" : c.same ? "pagando *lo mismo*" : "por *solo $" + Math.abs(c.saving) + " mas*";
+  c.tarifaFrase = c.saves ? "bajara a tan solo *$" + c.pRenta + " al mes*" : c.same ? "se mantiene en *$" + c.pRenta + " al mes*" : "sera de *$" + c.pRenta + " al mes*";
+  c.tarifaBajo = c.saves ? "bajo a tan solo $" + c.pRenta : "sera de tan solo $" + c.pRenta;
+  c.incremento = c.saves ? "incremento" : "tendras";
+  c.sabias = c.saves ? "Sabias que hoy pagas *$" + renta + "* por tu plan y podrias pagar *$" + c.pRenta + "* con *" + c.pGb + " GB* y apps ilimitadas?" : "Sabias que por " + (c.same ? "lo que ya pagas" : "casi lo mismo") + " podrias tener *" + c.pGb + " GB* en lugar de *" + gb + " GB* mas apps ilimitadas y llamadas a EUA y Canada?";
+  c.ahorroMes = c.saves ? "y *ahorras $" + c.saving + " al mes* ($" + c.savingYear + " al a\u00f1o)" : "por practicamente el mismo precio";
+  c.ahorroMes2 = c.saves ? "y pagas *menos* ($" + c.pRenta + " en lugar de $" + renta + ")" : "por " + (c.same ? "el mismo precio" : "solo $" + Math.abs(c.saving) + " mas");
+  c.sonAhorro = c.saves ? "Son *$" + c.savingYear + " de ahorro al a\u00f1o* \ud83d\udcb0" : "Es " + c.gbMult + "x mas datos por practicamente lo mismo";
+  c.ahorrandoFrase = c.saves ? "ahorrando *$" + c.saving + "/mes*" : "sin pagar mas";
+  c.precioCompare = c.saves ? " (*ahorras $" + c.saving + "/mes*)" : "";
+  c.tarifaMasBaja = c.saves ? "mas baja: *$" + c.pRenta + "/mes* (hoy pagas $" + renta + ")" : "de *$" + c.pRenta + "/mes*";
+  c.ahorroLinea = c.saves ? "-Ahorrarias *$" + c.saving + "/mes* ($" + c.savingYear + " al a\u00f1o)" : "-Tu tarifa seria de *$" + c.pRenta + "/mes*";
+  c.masivo_ahorro = c.saves ? "pagando *menos* ($" + c.pRenta + " en vez de $" + renta + ")" : "por " + (c.same ? "el mismo precio" : "casi lo mismo");
+  c.masivo_seg_ahorro = c.saves ? "y *ahorras $" + c.saving + " al mes* ($" + c.savingYear + " al a\u00f1o \ud83d\udcb0)" : "por " + (c.same ? "el mismo precio" : "practicamente lo mismo");
+  
+  return c;
+}
+
+// ================================================================
+// PERSONAL TEMPLATES
+// ================================================================
 function getMessages(data) {
-  const { name, agent, planName, planType, renta, gb, premium } = data;
-  const pName = premium.name;
-  const pRenta = premium.renta;
-  const pGb = premium.gb;
-  const saving = premium.saving;
-  const gbMult = premium.gbMultiple;
-  const savingYear = Math.abs(saving) * 12;
-  const savesOrPaysMore = saving > 0;
-  const rentaDiff = savesOrPaysMore ? `$${saving} menos al mes` : saving === 0 ? 'lo mismo' : `solo $${Math.abs(saving)} mas al mes`;
-  const firstName = name.split(' ')[0];
+  var c = makeCtx(data.planName, data.planType, data.renta, data.gb, data.premium, data.name ? data.name.split(" ")[0] : "", data.agent);
 
-  const templates = {
+  var templates = {
     primer_contacto: {
-      tip: `<b>Tip:</b> El primer contacto debe ser corto y generar curiosidad. No satures con informacion. El objetivo es que responda "si" para poder llamarle.`,
+      tip: "<b>Tip:</b> El primer contacto debe ser corto y generar curiosidad. No satures con informacion. El objetivo es que responda \"si\" para poder llamarle.",
       messages: [
-        {
-          tag: 'Opcion A — Directo con comparacion',
-          text: `Hola ${firstName}, buenas tardes 👋 Te saluda ${agent} de AT&T.
-
-Revisando tu linea veo que sigues con un plan ${planName} y hoy pagas $${renta}/mes por ${gb} GB.
-
-Tengo una buena noticia: ya puedes actualizar a *${pName}* ${savesOrPaysMore ? `pagando *${rentaDiff}*` : saving === 0 ? 'pagando *lo mismo*' : `por *${rentaDiff}*`} y recibes:
-
-✅ *${pGb} GB* de navegacion (${gbMult}x mas que hoy)
-✅ 6 apps ilimitadas
-✅ Llamadas y mensajes a EUA y Canada
-
-Conservas tu mismo numero y no tienes que ir a ninguna tienda. Te interesa? Solo toma 5 minutos 📲`
-        },
-        {
-          tag: 'Opcion B — Corto y con gancho',
-          text: `Hola ${firstName} 👋 Te contacto de AT&T.
-
-${savesOrPaysMore
-  ? `Sabias que hoy estas pagando *$${renta}/mes* y podrias pagar *$${pRenta}/mes* con ${gbMult}x mas datos y apps ilimitadas?`
-  : `Sabias que por ${saving === 0 ? 'lo mismo que pagas hoy' : `solo $${Math.abs(saving)} mas`} podrias tener *${pGb} GB* en lugar de ${gb} GB mas apps ilimitadas y llamadas a EUA y Canada?`}
-
-Tu plan ${planName} ya puede actualizarse y la mejora es importante.
-
-Quieres que te explique en 2 minutos? 📱`
-        },
-        {
-          tag: 'Opcion C — Interactivo con opciones',
-          text: `Hola ${firstName}!👋
-Tu plan *${planName}* ya cumplio su vigencia y tienes disponible una actualizacion a los planes *Premium*💎
-La diferencia principal es que con la actualizacion:
--Recibiras *${pGb} GB* (${gbMult}x mas de lo que tienes hoy)
--Tu tarifa ${savesOrPaysMore ? `bajara a tan solo *$${pRenta} al mes*` : saving === 0 ? `se mantiene en *$${pRenta} al mes*` : `sera de *$${pRenta} al mes*`}
--Podras adquirir el equipo que desees con descuentos increibles o bien si no deseas gastar simplemente reclama el equipo sin costo que te pertenece como cliente
--Mas apps ilimitadas
--Llamadas y mensajes a EUA y Canada
-
-Con esta propuesta AT&T quiere darte lo mejor y por ello tu respuesta es valiosa para mejorar, responde:
-1)💰Obviamente quiero pagar menos💰
-2)📱Me interesa cotizar un equipo📱
-3)No deseo ser contactado por este medio`
-        },
-        {
-          tag: 'Opcion D — Alerta con multiples opciones',
-          text: `🚨Actualizacion importante🚨
-
-Hola ${firstName}, es hora de actualizar tu plan ya que *tu tarifa ${savesOrPaysMore ? `bajo a tan solo $${pRenta}` : `sera de tan solo $${pRenta}`}* y ademas ${savesOrPaysMore ? 'incremento' : 'tendras'} a *${pGb} GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.
-
-📢‼️ Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres ‼️📢
-
-Tu respuesta es importante para nosotros, elige un numero 🚨
-1)*Si quiero pagar menos*💰💰💰
-2)*Me gustaria cotizar 🤑 un equipo*📲
-3)*Requiero una linea adicional*
-4)*Quiero mas informacion* 🤩
-5) Deseo que no me contacten por este medio
-
-*AT&T cambia el juego* 😉`
-        }
+        { tag: "Opcion A \u2014 Directo con comparacion",
+          text: L("Hola " + c.firstName + ", buenas tardes \ud83d\udc4b Te saluda " + c.agent + " de AT&T.", "",
+            "Revisando tu linea veo que sigues con un plan " + c.planName + " y hoy pagas $" + c.renta + "/mes por " + c.gb + " GB.", "",
+            "Tengo una buena noticia: ya puedes actualizar a *" + c.pName + "* " + c.pagarias + " y recibes:", "",
+            "\u2705 *" + c.pGb + " GB* de navegacion (" + c.gbMult + "x mas que hoy)",
+            "\u2705 6 apps ilimitadas",
+            "\u2705 Llamadas y mensajes a EUA y Canada", "",
+            "Conservas tu mismo numero y no tienes que ir a ninguna tienda. Te interesa? Solo toma 5 minutos \ud83d\udcf2") },
+        { tag: "Opcion B \u2014 Corto y con gancho",
+          text: L("Hola " + c.firstName + " \ud83d\udc4b Te contacto de AT&T.", "",
+            c.sabias, "",
+            "Tu plan " + c.planName + " ya puede actualizarse y la mejora es importante.", "",
+            "Quieres que te explique en 2 minutos? \ud83d\udcf1") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L("Hola " + c.firstName + "!\ud83d\udc4b",
+            "Tu plan *" + c.planName + "* ya cumplio su vigencia y tienes disponible una actualizacion a los planes *Premium*\ud83d\udc8e",
+            "La diferencia principal es que con la actualizacion:",
+            "-Recibiras *" + c.pGb + " GB* (" + c.gbMult + "x mas de lo que tienes hoy)",
+            "-Tu tarifa " + c.tarifaFrase,
+            "-Podras adquirir el equipo que desees con descuentos increibles o bien si no deseas gastar simplemente reclama el equipo sin costo que te pertenece como cliente",
+            "-Mas apps ilimitadas",
+            "-Llamadas y mensajes a EUA y Canada", "",
+            "Con esta propuesta AT&T quiere darte lo mejor y por ello tu respuesta es valiosa para mejorar, responde:",
+            "1)\ud83d\udcb0Obviamente quiero pagar menos\ud83d\udcb0",
+            "2)\ud83d\udcf1Me interesa cotizar un equipo\ud83d\udcf1",
+            "3)No deseo ser contactado por este medio") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Actualizacion importante\ud83d\udea8", "",
+            "Hola " + c.firstName + ", es hora de actualizar tu plan ya que *tu tarifa " + c.tarifaBajo + "* y ademas " + c.incremento + " a *" + c.pGb + " GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "Tu respuesta es importante para nosotros, elige un numero \ud83d\udea8",
+            "1)*Si quiero pagar menos*\ud83d\udcb0\ud83d\udcb0\ud83d\udcb0",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
       ]
     },
-
     seguimiento: {
-      tip: `<b>Tip:</b> Si no contesto el primer mensaje, cambia el enfoque. Genera urgencia o curiosidad con un dato diferente. No reenvies el mismo mensaje.`,
+      tip: "<b>Tip:</b> Si no contesto el primer mensaje, cambia el enfoque. Genera urgencia o curiosidad con un dato diferente. No reenvies el mismo mensaje.",
       messages: [
-        {
-          tag: 'Opcion A — Dato de impacto',
-          text: `${firstName}, te escribi hace unos dias sobre la mejora de tu plan AT&T.
-
-Solo para que lo tengas claro: con tu plan actual pagas *$${renta}/mes* por *${gb} GB*. Con la actualizacion tendrias *${pGb} GB* ${savesOrPaysMore ? `y *ahorras $${saving} al mes* ($${savingYear} al año)` : `por practicamente el mismo precio`}.
-
-La promocion sigue disponible, pero no por mucho tiempo ⏳
-
-Te interesa? Respondeme y lo armamos rapido.`
-        },
-        {
-          tag: 'Opcion B — Ultra breve',
-          text: `${firstName} 👋 Tu mejora de plan AT&T sigue disponible.
-
-De *${gb} GB* pasas a *${pGb} GB* ${savesOrPaysMore ? `y pagas *menos* ($${pRenta} en lugar de $${renta})` : `por ${saving === 0 ? 'el mismo precio' : `solo $${Math.abs(saving)} mas`}`}.
-
-Respondeme *SI* y te explico en 1 minuto ✅`
-        },
-        {
-          tag: 'Opcion C — Interactivo con opciones',
-          text: `Hola de nuevo ${firstName}!👋
-Te contactamos de AT&T porque tu plan *${planName}* tiene una actualizacion *Premium* disponible💎
-
-Mira lo que incluye:
--*${pGb} GB* de navegacion (${gbMult}x mas que tu plan actual)
--Tarifa ${savesOrPaysMore ? `mas baja: *$${pRenta}/mes* (hoy pagas $${renta})` : `de *$${pRenta}/mes*`}
--Acceso a descuentos en equipos o equipo sin costo
--Apps ilimitadas + llamadas a EUA y Canada
-
-No queremos que te quedes sin esta mejora, respondenos:
-1)💰Quiero pagar menos y mejorar mi plan💰
-2)📱Me interesa cotizar un equipo📱
-3)No deseo ser contactado por este medio`
-        },
-        {
-          tag: 'Opcion D — Alerta con multiples opciones',
-          text: `🚨Actualizacion importante🚨
-
-${firstName}, te recordamos que tu plan *${planName}* ya tiene disponible una mejora: *tu tarifa ${savesOrPaysMore ? `bajo a tan solo $${pRenta}` : `sera de tan solo $${pRenta}`}* y ademas ${savesOrPaysMore ? 'incremento' : 'tendras'} a *${pGb} GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.
-
-📢‼️ Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres ‼️📢
-
-Tu respuesta es importante para nosotros, elige un numero 🚨
-1)*Si quiero pagar menos*💰💰💰
-2)*Me gustaria cotizar 🤑 un equipo*📲
-3)*Requiero una linea adicional*
-4)*Quiero mas informacion* 🤩
-5) Deseo que no me contacten por este medio
-
-*AT&T cambia el juego* 😉`
-        }
+        { tag: "Opcion A \u2014 Dato de impacto",
+          text: L(c.firstName + ", te escribi hace unos dias sobre la mejora de tu plan AT&T.", "",
+            "Solo para que lo tengas claro: con tu plan actual pagas *$" + c.renta + "/mes* por *" + c.gb + " GB*. Con la actualizacion tendrias *" + c.pGb + " GB* " + c.ahorroMes + ".", "",
+            "La promocion sigue disponible, pero no por mucho tiempo \u23f3", "",
+            "Te interesa? Respondeme y lo armamos rapido.") },
+        { tag: "Opcion B \u2014 Ultra breve",
+          text: L(c.firstName + " \ud83d\udc4b Tu mejora de plan AT&T sigue disponible.", "",
+            "De *" + c.gb + " GB* pasas a *" + c.pGb + " GB* " + c.ahorroMes2 + ".", "",
+            "Respondeme *SI* y te explico en 1 minuto \u2705") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L("Hola de nuevo " + c.firstName + "!\ud83d\udc4b",
+            "Te contactamos de AT&T porque tu plan *" + c.planName + "* tiene una actualizacion *Premium* disponible\ud83d\udc8e", "",
+            "Mira lo que incluye:",
+            "-*" + c.pGb + " GB* de navegacion (" + c.gbMult + "x mas que tu plan actual)",
+            "-Tarifa " + c.tarifaMasBaja,
+            "-Acceso a descuentos en equipos o equipo sin costo",
+            "-Apps ilimitadas + llamadas a EUA y Canada", "",
+            "No queremos que te quedes sin esta mejora, respondenos:",
+            "1)\ud83d\udcb0Quiero pagar menos y mejorar mi plan\ud83d\udcb0",
+            "2)\ud83d\udcf1Me interesa cotizar un equipo\ud83d\udcf1",
+            "3)No deseo ser contactado por este medio") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Actualizacion importante\ud83d\udea8", "",
+            c.firstName + ", te recordamos que tu plan *" + c.planName + "* ya tiene disponible una mejora: *tu tarifa " + c.tarifaBajo + "* y ademas " + c.incremento + " a *" + c.pGb + " GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "Tu respuesta es importante para nosotros, elige un numero \ud83d\udea8",
+            "1)*Si quiero pagar menos*\ud83d\udcb0\ud83d\udcb0\ud83d\udcb0",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
       ]
     },
-
     cierre: {
-      tip: `<b>Tip:</b> El mensaje de cierre debe crear urgencia real. Usa fechas, numeros concretos y haz que la accion sea facil ("solo responde SI").`,
+      tip: "<b>Tip:</b> El mensaje de cierre debe crear urgencia real. Usa fechas, numeros concretos y haz que la accion sea facil.",
       messages: [
-        {
-          tag: 'Opcion A — Urgencia con fecha',
-          text: `${firstName}, te comento que la promocion para actualizar tu plan ${planName} esta por vencer este mes.
-
-Mira lo que pierdes si no actualizas:
-
-❌ Tu plan actual: ${gb} GB + solo redes sociales — *$${renta}/mes*
-✅ Plan ${pName}: *${pGb} GB* + 6 apps ilimitadas + llamadas a EUA/Canada — *$${pRenta}/mes*
-
-${savesOrPaysMore ? `Son *$${savingYear} de ahorro al año* 💰` : `Es ${gbMult}x mas datos por practicamente lo mismo`}
-
-Despues de este mes, tu linea se queda con el plan anterior sin posibilidad de mejora en las mismas condiciones.
-
-Lo activamos? Te llamo en 2 minutos si me respondes *SI* ✅`
-        },
-        {
-          tag: 'Opcion B — Social proof + facilidad',
-          text: `${firstName}, esta semana ya ayudamos a muchos clientes AT&T con plan ${planType === 'contodo' ? 'Con Todo' : planType === 'consiguelo' ? 'Consiguelo' : 'Armalo'} a mejorar su servicio.
-
-La mayoria paso de ${gb} GB a *${pGb} GB* ${savesOrPaysMore ? `ahorrando *$${saving}/mes*` : 'sin pagar mas'}.
-
-Lo hacemos en 5 minutos por telefono, no tienes que ir a tienda ni hacer tramites complicados 🙌
-
-Te marco? Solo respondeme *SI* y listo.`
-        },
-        {
-          tag: 'Opcion C — Interactivo con opciones',
-          text: `⚠️ Ultima oportunidad ${firstName}!
-Tu plan *${planName}* esta por perder la posibilidad de actualizar a *Premium*💎
-
-Lo que esta en juego:
--Pasarias de *${gb} GB* a *${pGb} GB* de navegacion
-${savesOrPaysMore ? `-Ahorrarias *$${saving}/mes* ($${savingYear} al año)` : `-Tu tarifa seria de *$${pRenta}/mes*`}
--Descuentos exclusivos en equipos nuevos o equipo sin costo
--Apps ilimitadas + llamadas a EUA y Canada
-
-Responde antes de que cierre:
-1)💰Si! Quiero la mejora💰
-2)📱Me interesa un equipo nuevo📱
-3)No deseo ser contactado por este medio`
-        },
-        {
-          tag: 'Opcion D — Alerta con multiples opciones',
-          text: `🚨Actualizacion importante ${firstName}🚨
-
-Tu plan *${planName}* esta en sus ultimos dias para actualizar. *Tu tarifa ${savesOrPaysMore ? `bajo a tan solo $${pRenta}` : `sera de tan solo $${pRenta}`}* y ademas ${savesOrPaysMore ? 'incremento' : 'tendras'} a *${pGb} GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.
-
-📢‼️ Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres ‼️📢
-
-No dejes pasar esta oportunidad, elige un numero 🚨
-1)*Si quiero pagar menos*💰💰💰
-2)*Me gustaria cotizar 🤑 un equipo*📲
-3)*Requiero una linea adicional*
-4)*Quiero mas informacion* 🤩
-5) Deseo que no me contacten por este medio
-
-*AT&T cambia el juego* 😉`
-        }
+        { tag: "Opcion A \u2014 Urgencia con fecha",
+          text: L(c.firstName + ", te comento que la promocion para actualizar tu plan " + c.planName + " esta por vencer este mes.", "",
+            "Mira lo que pierdes si no actualizas:", "",
+            "\u274c Tu plan actual: " + c.gb + " GB + solo redes sociales \u2014 *$" + c.renta + "/mes*",
+            "\u2705 Plan " + c.pName + ": *" + c.pGb + " GB* + 6 apps ilimitadas + llamadas a EUA/Canada \u2014 *$" + c.pRenta + "/mes*", "",
+            c.sonAhorro, "",
+            "Despues de este mes, tu linea se queda con el plan anterior sin posibilidad de mejora en las mismas condiciones.", "",
+            "Lo activamos? Te llamo en 2 minutos si me respondes *SI* \u2705") },
+        { tag: "Opcion B \u2014 Social proof + facilidad",
+          text: L(c.firstName + ", esta semana ya ayudamos a muchos clientes AT&T con plan " + c.planLabel + " a mejorar su servicio.", "",
+            "La mayoria paso de " + c.gb + " GB a *" + c.pGb + " GB* " + c.ahorrandoFrase + ".", "",
+            "Lo hacemos en 5 minutos por telefono, no tienes que ir a tienda ni hacer tramites complicados \ud83d\ude4c", "",
+            "Te marco? Solo respondeme *SI* y listo.") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L("\u26a0\ufe0f Ultima oportunidad " + c.firstName + "!",
+            "Tu plan *" + c.planName + "* esta por perder la posibilidad de actualizar a *Premium*\ud83d\udc8e", "",
+            "Lo que esta en juego:",
+            "-Pasarias de *" + c.gb + " GB* a *" + c.pGb + " GB* de navegacion",
+            c.ahorroLinea,
+            "-Descuentos exclusivos en equipos nuevos o equipo sin costo",
+            "-Apps ilimitadas + llamadas a EUA y Canada", "",
+            "Responde antes de que cierre:",
+            "1)\ud83d\udcb0Si! Quiero la mejora\ud83d\udcb0",
+            "2)\ud83d\udcf1Me interesa un equipo nuevo\ud83d\udcf1",
+            "3)No deseo ser contactado por este medio") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Actualizacion importante " + c.firstName + "\ud83d\udea8", "",
+            "Tu plan *" + c.planName + "* esta en sus ultimos dias para actualizar. *Tu tarifa " + c.tarifaBajo + "* y ademas " + c.incremento + " a *" + c.pGb + " GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "No dejes pasar esta oportunidad, elige un numero \ud83d\udea8",
+            "1)*Si quiero pagar menos*\ud83d\udcb0\ud83d\udcb0\ud83d\udcb0",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
       ]
     },
-
     tienda: {
-      tip: `<b>Tip:</b> El cliente que dice "prefiero ir a tienda" generalmente tiene desconfianza o quiere verlo en persona. Valida su preocupacion y muestra las ventajas de hacerlo por telefono.`,
+      tip: "<b>Tip:</b> El cliente que dice \"prefiero ir a tienda\" generalmente tiene desconfianza. Valida su preocupacion y muestra las ventajas de hacerlo por telefono.",
       messages: [
-        {
-          tag: 'Opcion A — Validar + ventaja del telefono',
-          text: `Entiendo perfectamente ${firstName} 👍 Es normal querer ir a la tienda.
-
-Solo te comento 3 ventajas de hacerlo conmigo por telefono:
-
-1️⃣ *No haces fila* — en tienda el tiempo promedio es de 40 min a 1 hora
-2️⃣ *Mismo resultado* — el plan ${pName} con *${pGb} GB* a *$${pRenta}/mes* es exactamente el mismo
-3️⃣ *Queda grabado* — la llamada queda registrada como respaldo de tu cambio
-
-Si prefieres ir a tienda no hay problema, pero si quieres ahorrarte el viaje lo hacemos ahorita en 5 minutos 📲
-
-Tu decides 🤝`
-        },
-        {
-          tag: 'Opcion B — Disponibilidad + urgencia',
-          text: `Claro ${firstName}, en la tienda te pueden atender sin problema.
-
-Solo ten en cuenta que esta promocion la estamos manejando directamente y *puede que en tienda no tengan la misma oferta*.
-
-Tu plan ${planName} de $${renta}/mes cambiaria a *${pName}* con *${pGb} GB* a *$${pRenta}/mes* ${savesOrPaysMore ? `(*ahorras $${saving}/mes*)` : ''}.
-
-Si decides hacerlo por aqui, te llamo y lo resolvemos rapido. Si prefieres tienda, te recomiendo ir a la mas cercana antes de fin de mes cuando cambian las promociones.
-
-Como le hacemos? 📱`
-        },
-        {
-          tag: 'Opcion C — Interactivo con opciones',
-          text: `Hola ${firstName}!👋
-Entendemos que prefieras ir a tienda, es totalmente valido 👍
-
-Pero antes de que hagas el viaje, mira lo que tu plan *${planName}* puede mejorar:
--*${pGb} GB* de navegacion (${gbMult}x mas que hoy)
--Tarifa ${savesOrPaysMore ? `mas baja: *$${pRenta}/mes*` : `de *$${pRenta}/mes*`}
--Equipo sin costo o descuentos increibles
--Apps ilimitadas + llamadas a EUA y Canada
-
-Todo esto lo puedes hacer por telefono en 5 minutos, sin filas. Pero tu decides:
-1)💰Hagamoslo por telefono, quiero la mejora💰
-2)📱Me interesa cotizar un equipo📱
-3)Prefiero ir a tienda de todos modos`
-        },
-        {
-          tag: 'Opcion D — Alerta con multiples opciones',
-          text: `🚨Actualizacion importante ${firstName}🚨
-
-Antes de que vayas a tienda, te compartimos que *tu tarifa ${savesOrPaysMore ? `bajo a tan solo $${pRenta}` : `sera de tan solo $${pRenta}`}* y ademas ${savesOrPaysMore ? 'incremento' : 'tendras'} a *${pGb} GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.
-
-📢‼️ Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres ‼️📢
-
-Lo mejor: lo hacemos por telefono sin que tengas que hacer fila 🙌
-
-Elige un numero 🚨
-1)*Si quiero pagar menos*💰💰💰
-2)*Me gustaria cotizar 🤑 un equipo*📲
-3)*Requiero una linea adicional*
-4)*Quiero mas informacion* 🤩
-5) Deseo que no me contacten por este medio
-
-*AT&T cambia el juego* 😉`
-        }
+        { tag: "Opcion A \u2014 Validar + ventaja",
+          text: L("Entiendo perfectamente " + c.firstName + " \ud83d\udc4d Es normal querer ir a la tienda.", "",
+            "Solo te comento 3 ventajas de hacerlo conmigo por telefono:", "",
+            "1\ufe0f\u20e3 *No haces fila* \u2014 en tienda el tiempo promedio es de 40 min a 1 hora",
+            "2\ufe0f\u20e3 *Mismo resultado* \u2014 el plan " + c.pName + " con *" + c.pGb + " GB* a *$" + c.pRenta + "/mes* es exactamente el mismo",
+            "3\ufe0f\u20e3 *Queda grabado* \u2014 la llamada queda registrada como respaldo de tu cambio", "",
+            "Si prefieres ir a tienda no hay problema, pero si quieres ahorrarte el viaje lo hacemos ahorita en 5 minutos \ud83d\udcf2", "",
+            "Tu decides \ud83e\udd1d") },
+        { tag: "Opcion B \u2014 Disponibilidad + urgencia",
+          text: L("Claro " + c.firstName + ", en la tienda te pueden atender sin problema.", "",
+            "Solo ten en cuenta que esta promocion la estamos manejando directamente y *puede que en tienda no tengan la misma oferta*.", "",
+            "Tu plan " + c.planName + " de $" + c.renta + "/mes cambiaria a *" + c.pName + "* con *" + c.pGb + " GB* a *$" + c.pRenta + "/mes*" + c.precioCompare + ".", "",
+            "Si decides hacerlo por aqui, te llamo y lo resolvemos rapido. Si prefieres tienda, te recomiendo ir a la mas cercana antes de fin de mes cuando cambian las promociones.", "",
+            "Como le hacemos? \ud83d\udcf1") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L("Hola " + c.firstName + "!\ud83d\udc4b",
+            "Entendemos que prefieras ir a tienda, es totalmente valido \ud83d\udc4d", "",
+            "Pero antes de que hagas el viaje, mira lo que tu plan *" + c.planName + "* puede mejorar:",
+            "-*" + c.pGb + " GB* de navegacion (" + c.gbMult + "x mas que hoy)",
+            "-Tarifa " + c.tarifaMasBaja,
+            "-Equipo sin costo o descuentos increibles",
+            "-Apps ilimitadas + llamadas a EUA y Canada", "",
+            "Todo esto lo puedes hacer por telefono en 5 minutos, sin filas. Pero tu decides:",
+            "1)\ud83d\udcb0Hagamoslo por telefono, quiero la mejora\ud83d\udcb0",
+            "2)\ud83d\udcf1Me interesa cotizar un equipo\ud83d\udcf1",
+            "3)Prefiero ir a tienda de todos modos") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Actualizacion importante " + c.firstName + "\ud83d\udea8", "",
+            "Antes de que vayas a tienda, te compartimos que *tu tarifa " + c.tarifaBajo + "* y ademas " + c.incremento + " a *" + c.pGb + " GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "Lo mejor: lo hacemos por telefono sin que tengas que hacer fila \ud83d\ude4c", "",
+            "Elige un numero \ud83d\udea8",
+            "1)*Si quiero pagar menos*\ud83d\udcb0\ud83d\udcb0\ud83d\udcb0",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
       ]
     }
   };
-
   return templates[selectedScenario];
 }
 
-// ═══════════════════════════════════════════════════════════════
-// GENERATE
-// ═══════════════════════════════════════════════════════════════
-function generateMessages() {
-  try {
-  const name = document.getElementById('clientName').value.trim();
-  const planKey = document.getElementById('planAnterior').value;
-  const rentaOverride = document.getElementById('rentaOverride').value.trim();
-  const agent = document.getElementById('agentName').value.trim();
-  const premiumChoice = document.getElementById('premiumPlan').value;
+// ================================================================
+// MASS TEMPLATES
+// ================================================================
+function getMassMessages(planKey, renta, gb, premium) {
+  var c = makeCtx(planKey, PLANS[planKey].type, renta, gb, premium, "", "");
 
-  if (!name) { shake('clientName'); return; }
-  if (!planKey) { shake('planAnterior'); return; }
-
-  const plan = PLANS[planKey];
-  const renta = rentaOverride ? parseInt(rentaOverride.replace(/[^0-9]/g,'')) : plan.renta;
-
-  let premium;
-  if (premiumChoice === 'auto') {
-    premium = findBestPremium(renta, plan.gb);
-  } else {
-    const p = PREMIUM[premiumChoice];
-    premium = { name: premiumChoice, ...p, saving: renta - p.renta, gbGain: p.gb - plan.gb, gbMultiple: (p.gb / plan.gb).toFixed(1) };
-  }
-
-  const data = { name, agent: agent || 'tu asesor', planName: planKey, planType: plan.type, renta, gb: plan.gb, premium };
-  const result = getMessages(data);
-
-  renderResults(data, result);
-  } catch(e) { alert('Error al generar: ' + e.message); console.error(e); }
-}
-
-// Auto-suggest premium when anterior plan changes
-document.getElementById('planAnterior').addEventListener('change', function() {
-  const planKey = this.value;
-  if (!planKey) { document.getElementById('premium-hint').textContent = ''; return; }
-  const plan = PLANS[planKey];
-  const rentaOverride = document.getElementById('rentaOverride').value.trim();
-  const renta = rentaOverride ? parseInt(rentaOverride.replace(/[^0-9]/g,'')) : plan.renta;
-  const best = findBestPremium(renta, plan.gb);
-  if (best) {
-    document.getElementById('premium-hint').innerHTML = '💡 Sugerencia: <b>' + best.name + '</b> ($' + best.renta + '/mes, ' + best.gb + ' GB) — ' + (best.saving > 0 ? 'ahorra $' + best.saving + '/mes' : best.saving === 0 ? 'mismo precio' : 'solo $' + Math.abs(best.saving) + ' mas');
-    document.getElementById('premiumPlan').value = 'auto';
-  }
-});
-
-function shake(id) {
-  const el = document.getElementById(id);
-  el.style.borderColor = '#EF4444';
-  el.style.animation = 'shake .4s ease';
-  setTimeout(() => { el.style.animation = ''; el.style.borderColor = ''; }, 500);
-}
-
-// ═══════════════════════════════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════════════════════════════
-function renderResults(data, result) {
-  const { renta, gb, premium, planName } = data;
-  const saving = premium.saving;
-  const savesOrPaysMore = saving > 0;
-
-  let html = '';
-
-  // Comparison card
-  html += `<div class="comparison">
-    <div class="comparison-title">Comparativa automatica del plan</div>
-    <div class="compare-grid">
-      <div class="compare-box old">
-        <div class="box-label">Plan Actual</div>
-        <div class="plan-name">${planName}</div>
-        <div class="plan-price">$${renta}</div>
-        <div class="plan-data">${gb} GB + redes sociales</div>
-      </div>
-      <div class="compare-arrow">→</div>
-      <div class="compare-box new">
-        <div class="box-label">Plan Recomendado</div>
-        <div class="plan-name">${premium.name}</div>
-        <div class="plan-price">$${premium.renta}</div>
-        <div class="plan-data">${premium.gb} GB + 6 apps + EUA/CAN</div>
-      </div>
-    </div>
-    <div class="savings-strip">
-      <div class="saving-item"><div class="val" style="color:${savesOrPaysMore?'#10B981':saving===0?'var(--att)':'#F59E0B'}">${savesOrPaysMore?'-$'+saving+'/mes':saving===0?'$0':'+ $'+Math.abs(saving)+'/mes'}</div><div class="lbl">${savesOrPaysMore?'Ahorro mensual':saving===0?'Mismo precio':'Diferencia'}</div></div>
-      <div class="saving-item"><div class="val" style="color:#009FDB">${premium.gbMultiple}x</div><div class="lbl">Mas datos</div></div>
-      <div class="saving-item"><div class="val" style="color:#10B981">${premium.gb} GB</div><div class="lbl">Navegacion libre</div></div>
-      ${savesOrPaysMore?`<div class="saving-item"><div class="val" style="color:#10B981">$${saving*12}/año</div><div class="lbl">Ahorro anual</div></div>`:''}
-    </div>
-  </div>`;
-
-  // Tip
-  html += `<div class="scenario-tip"><div class="tip-icon">💡</div><div class="tip-text">${result.tip}</div></div>`;
-
-  // Message cards
-  result.messages.forEach((msg, i) => {
-    const tagClass = ['tag-a','tag-b','tag-c','tag-d'][i] || 'tag-a';
-    const now = new Date();
-    const timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-
-    html += `<div class="msg-card">
-      <div class="msg-header">
-        <span class="tag ${tagClass}">${msg.tag}</span>
-        <button class="btn-copy" onclick="copyMessage(this, ${i})" data-msg-index="${i}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copiar mensaje
-        </button>
-      </div>
-      <div class="wa-bubble-container">
-        <div class="wa-bubble">${msg.text}<div class="wa-time">${timeStr} ✓✓</div></div>
-      </div>
-    </div>`;
-  });
-
-  document.getElementById('results').innerHTML = html;
-
-  // Store messages for copy
-  window._generatedMessages = result.messages.map(m => m.text);
-}
-
-// ═══════════════════════════════════════════════════════════════
-// COPY (with fallback for HTTP / mobile)
-// ═══════════════════════════════════════════════════════════════
-function fallbackCopy(text) {
-  var ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.position = 'fixed';
-  ta.style.left = '-9999px';
-  ta.style.top = '-9999px';
-  document.body.appendChild(ta);
-  ta.focus();
-  ta.select();
-  try { document.execCommand('copy'); } catch(e) {}
-  document.body.removeChild(ta);
-}
-
-function doCopy(text) {
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(text).catch(function() { fallbackCopy(text); });
-  } else {
-    fallbackCopy(text);
-  }
-}
-
-function copyMessage(btn, idx) {
-  try {
-    var waText = window._generatedMessages[idx].replace(/\n{3,}/g, '\n\n');
-    doCopy(waText);
-    btn.classList.add('copied');
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Copiado!';
-    showToast();
-    setTimeout(function() {
-      btn.classList.remove('copied');
-      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar mensaje';
-    }, 2000);
-  } catch(e) { alert('Error al copiar: ' + e.message); }
-}
-
-function showToast() {
-  const toast = document.getElementById('toast');
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2500);
-}
-
-// ═══════════════════════════════════════════════════════════════
-// TABS
-// ═══════════════════════════════════════════════════════════════
-function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', (tab === 'personal' && i === 0) || (tab === 'masivo' && i === 1)));
-  document.getElementById('tab-personal').classList.toggle('active', tab === 'personal');
-  document.getElementById('tab-masivo').classList.toggle('active', tab === 'masivo');
-}
-
-// ═══════════════════════════════════════════════════════════════
-// MASS MESSAGING
-// ═══════════════════════════════════════════════════════════════
-let selectedMassScenario = 'captacion';
-
-function selectMassScenario(btn) {
-  document.querySelectorAll('.mass-scenario-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  selectedMassScenario = btn.dataset.massScenario;
-}
-
-document.getElementById('massPlan').addEventListener('change', function() {
-  const planKey = this.value;
-  if (!planKey) { document.getElementById('mass-premium-hint').textContent = ''; return; }
-  const plan = PLANS[planKey];
-  const best = findBestPremium(plan.renta, plan.gb);
-  if (best) {
-    document.getElementById('mass-premium-hint').innerHTML = '💡 Sugerencia: <b>' + best.name + '</b> ($' + best.renta + '/mes, ' + best.gb + ' GB) — ' + (best.saving > 0 ? 'ahorra $' + best.saving + '/mes' : best.saving === 0 ? 'mismo precio' : 'solo $' + Math.abs(best.saving) + ' mas');
-  }
-});
-
-function generateMassMessages() {
-  try {
-  const planKey = document.getElementById('massPlan').value;
-  const premiumChoice = document.getElementById('massPremium').value;
-
-  if (!planKey) { shake('massPlan'); return; }
-
-  const plan = PLANS[planKey];
-  const renta = plan.renta;
-  const gb = plan.gb;
-
-  let premium;
-  if (premiumChoice === 'auto') {
-    premium = findBestPremium(renta, gb);
-  } else {
-    const p = PREMIUM[premiumChoice];
-    premium = { name: premiumChoice, ...p, saving: renta - p.renta, gbGain: p.gb - gb, gbMultiple: (p.gb / Math.max(gb, 1)).toFixed(1) };
-  }
-
-  const pName = premium.name;
-  const pRenta = premium.renta;
-  const pGb = premium.gb;
-  const saving = premium.saving;
-  const savingYear = Math.abs(saving) * 12;
-  const gbMult = premium.gbMultiple;
-  const savesOrPaysMore = saving > 0;
-  const planType = plan.type === 'contodo' ? 'Con Todo' : plan.type === 'consiguelo' ? 'Consiguelo' : 'Armalo';
-
-  const templates = {
+  var templates = {
     captacion: {
-      tip: `<b>Captacion masiva:</b> Mensajes cortos y directos. El objetivo es que respondan "si". No incluyen nombre porque van a listas completas.`,
+      tip: "<b>Captacion masiva:</b> Mensajes cortos y directos. El objetivo es que respondan. No incluyen nombre porque van a listas completas.",
       messages: [
-        {
-          tag: 'Opcion A — Con datos duros',
-          text: `Hola, buenas tardes 👋 Te contactamos de AT&T.
-
-Detectamos que tu plan *${planKey}* ya puede actualizarse.
-
-Hoy pagas *$${renta}/mes* por *${gb} GB*. Con la actualizacion a *${pName}* ${savesOrPaysMore ? 'pagarias *$' + pRenta + '/mes* (*$' + saving + ' menos*)' : saving === 0 ? 'pagarias *lo mismo*' : 'pagarias *$' + pRenta + '/mes*'} y recibes:
-
-✅ *${pGb} GB* de navegacion (${gbMult}x mas)
-✅ 6 apps ilimitadas
-✅ Llamadas a EUA y Canada
-
-Conservas tu numero, sin ir a tienda. Te interesa? 📲`
-        },
-        {
-          tag: 'Opcion B — Corto y curioso',
-          text: `Hola 👋 Te escribimos de AT&T.
-
-${savesOrPaysMore
-  ? `Sabias que hoy pagas *$${renta}* por tu plan y podrias pagar *$${pRenta}* con *${pGb} GB* y apps ilimitadas?`
-  : `Sabias que por ${saving === 0 ? 'lo que ya pagas' : 'casi lo mismo'} podrias tener *${pGb} GB* en lugar de *${gb} GB* mas apps ilimitadas y llamadas a EUA y Canada?`}
-
-Tu plan ${planKey} ya tiene actualizacion disponible ✅
-
-Quieres saber mas? Respondeme SI y te explico en 2 minutos.`
-        },
-        {
-          tag: 'Opcion C — Interactivo con opciones',
-          text: `Hola!👋
-Tu plan *${planKey}* ya cumplio su vigencia y tienes disponible una actualizacion a los planes *Premium*💎
-La diferencia principal es que con la actualizacion:
--Recibiras *${pGb} GB* (${gbMult}x mas de lo que tienes hoy)
--Tu tarifa ${savesOrPaysMore ? `bajara a tan solo *$${pRenta} al mes*` : saving === 0 ? `se mantiene en *$${pRenta} al mes*` : `sera de *$${pRenta} al mes*`}
--Podras adquirir el equipo que desees con descuentos increibles o bien si no deseas gastar simplemente reclama el equipo sin costo que te pertenece como cliente
--Mas apps ilimitadas
--Llamadas y mensajes a EUA y Canada
-
-Con esta propuesta AT&T quiere darte lo mejor y por ello tu respuesta es valiosa para mejorar, responde:
-1)💰Obviamente quiero pagar menos💰
-2)📱Me interesa cotizar un equipo📱
-3)No deseo ser contactado por este medio`
-        },
-        {
-          tag: 'Opcion D — Alerta con multiples opciones',
-          text: `🚨Actualizacion importante🚨
-
-Es hora de actualizar tu plan ya que *tu tarifa ${savesOrPaysMore ? `bajo a tan solo $${pRenta}` : `sera de tan solo $${pRenta}`}* y ademas ${savesOrPaysMore ? 'incremento' : 'tendras'} a *${pGb} GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.
-
-📢‼️ Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres ‼️📢
-
-Tu respuesta es importante para nosotros, elige un numero 🚨
-1)*Si quiero pagar menos*💰💰💰
-2)*Me gustaria cotizar 🤑 un equipo*📲
-3)*Requiero una linea adicional*
-4)*Quiero mas informacion* 🤩
-5) Deseo que no me contacten por este medio
-
-*AT&T cambia el juego* 😉`
-        }
+        { tag: "Opcion A \u2014 Con datos duros",
+          text: L("Hola, buenas tardes \ud83d\udc4b Te contactamos de AT&T.", "",
+            "Detectamos que tu plan *" + c.planName + "* ya puede actualizarse.", "",
+            "Hoy pagas *$" + c.renta + "/mes* por *" + c.gb + " GB*. Con la actualizacion a *" + c.pName + "* " + c.pagarias + " y recibes:", "",
+            "\u2705 *" + c.pGb + " GB* de navegacion (" + c.gbMult + "x mas)",
+            "\u2705 6 apps ilimitadas",
+            "\u2705 Llamadas a EUA y Canada", "",
+            "Conservas tu numero, sin ir a tienda. Te interesa? \ud83d\udcf2") },
+        { tag: "Opcion B \u2014 Corto y curioso",
+          text: L("Hola \ud83d\udc4b Te escribimos de AT&T.", "",
+            c.sabias, "",
+            "Tu plan " + c.planName + " ya tiene actualizacion disponible \u2705", "",
+            "Quieres saber mas? Respondeme SI y te explico en 2 minutos.") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L("Hola!\ud83d\udc4b",
+            "Tu plan *" + c.planName + "* ya cumplio su vigencia y tienes disponible una actualizacion a los planes *Premium*\ud83d\udc8e",
+            "La diferencia principal es que con la actualizacion:",
+            "-Recibiras *" + c.pGb + " GB* (" + c.gbMult + "x mas de lo que tienes hoy)",
+            "-Tu tarifa " + c.tarifaFrase,
+            "-Podras adquirir el equipo que desees con descuentos increibles o bien si no deseas gastar simplemente reclama el equipo sin costo que te pertenece como cliente",
+            "-Mas apps ilimitadas",
+            "-Llamadas y mensajes a EUA y Canada", "",
+            "Con esta propuesta AT&T quiere darte lo mejor y por ello tu respuesta es valiosa para mejorar, responde:",
+            "1)\ud83d\udcb0Obviamente quiero pagar menos\ud83d\udcb0",
+            "2)\ud83d\udcf1Me interesa cotizar un equipo\ud83d\udcf1",
+            "3)No deseo ser contactado por este medio") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Actualizacion importante\ud83d\udea8", "",
+            "Es hora de actualizar tu plan ya que *tu tarifa " + c.tarifaBajo + "* y ademas " + c.incremento + " a *" + c.pGb + " GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "Tu respuesta es importante para nosotros, elige un numero \ud83d\udea8",
+            "1)*Si quiero pagar menos*\ud83d\udcb0\ud83d\udcb0\ud83d\udcb0",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
       ]
     },
-
     seguimiento: {
-      tip: `<b>Seguimiento masivo:</b> Para listas que ya recibieron un primer mensaje y no contestaron. Cambia el angulo y genera urgencia.`,
+      tip: "<b>Seguimiento masivo:</b> Para listas que ya recibieron un primer mensaje y no contestaron.",
       messages: [
-        {
-          tag: 'Opcion A — Recordatorio con dato',
-          text: `Hola, te escribimos hace unos dias de AT&T sobre la mejora disponible para tu plan 📱
-
-Solo para recordarte: con tu plan *${planKey}* pagas *$${renta}/mes* por *${gb} GB*.
-
-Con la actualizacion tendrias *${pGb} GB* ${savesOrPaysMore ? `y *ahorras $${saving} al mes* ($${savingYear} al año 💰)` : `por ${saving === 0 ? 'el mismo precio' : 'practicamente lo mismo'}`}.
-
-La oferta sigue vigente pero tiene fecha limite ⏳
-
-Respondeme SI si te interesa.`
-        },
-        {
-          tag: 'Opcion B — Muy breve',
-          text: `👋 Tu mejora de plan AT&T sigue disponible.
-
-De *${gb} GB* a *${pGb} GB* ${savesOrPaysMore ? `pagando *menos* ($${pRenta} en vez de $${renta})` : `por ${saving === 0 ? 'el mismo precio' : 'casi lo mismo'}`}.
-
-Responde *SI* y te explico rapido ✅`
-        },
-        {
-          tag: 'Opcion C — Interactivo con opciones',
-          text: `Hola de nuevo!👋
-Te contactamos de AT&T porque tu plan *${planKey}* tiene una actualizacion *Premium* disponible💎
-
-Mira lo que incluye:
--*${pGb} GB* de navegacion (${gbMult}x mas que tu plan actual)
--Tarifa ${savesOrPaysMore ? `mas baja: *$${pRenta}/mes* (hoy pagas $${renta})` : `de *$${pRenta}/mes*`}
--Acceso a descuentos en equipos o equipo sin costo
--Apps ilimitadas + llamadas a EUA y Canada
-
-No queremos que te quedes sin esta mejora, respondenos:
-1)💰Quiero pagar menos y mejorar mi plan💰
-2)📱Me interesa cotizar un equipo📱
-3)No deseo ser contactado por este medio`
-        },
-        {
-          tag: 'Opcion D — Alerta con multiples opciones',
-          text: `🚨Actualizacion importante🚨
-
-Te recordamos que tu plan *${planKey}* ya tiene disponible una mejora: *tu tarifa ${savesOrPaysMore ? `bajo a tan solo $${pRenta}` : `sera de tan solo $${pRenta}`}* y ademas ${savesOrPaysMore ? 'incremento' : 'tendras'} a *${pGb} GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.
-
-📢‼️ Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres ‼️📢
-
-Tu respuesta es importante para nosotros, elige un numero 🚨
-1)*Si quiero pagar menos*💰💰💰
-2)*Me gustaria cotizar 🤑 un equipo*📲
-3)*Requiero una linea adicional*
-4)*Quiero mas informacion* 🤩
-5) Deseo que no me contacten por este medio
-
-*AT&T cambia el juego* 😉`
-        }
+        { tag: "Opcion A \u2014 Recordatorio con dato",
+          text: L("Hola, te escribimos hace unos dias de AT&T sobre la mejora disponible para tu plan \ud83d\udcf1", "",
+            "Solo para recordarte: con tu plan *" + c.planName + "* pagas *$" + c.renta + "/mes* por *" + c.gb + " GB*.", "",
+            "Con la actualizacion tendrias *" + c.pGb + " GB* " + c.masivo_seg_ahorro + ".", "",
+            "La oferta sigue vigente pero tiene fecha limite \u23f3", "",
+            "Respondeme SI si te interesa.") },
+        { tag: "Opcion B \u2014 Muy breve",
+          text: L("\ud83d\udc4b Tu mejora de plan AT&T sigue disponible.", "",
+            "De *" + c.gb + " GB* a *" + c.pGb + " GB* " + c.masivo_ahorro + ".", "",
+            "Responde *SI* y te explico rapido \u2705") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L("Hola de nuevo!\ud83d\udc4b",
+            "Te contactamos de AT&T porque tu plan *" + c.planName + "* tiene una actualizacion *Premium* disponible\ud83d\udc8e", "",
+            "Mira lo que incluye:",
+            "-*" + c.pGb + " GB* de navegacion (" + c.gbMult + "x mas que tu plan actual)",
+            "-Tarifa " + c.tarifaMasBaja,
+            "-Acceso a descuentos en equipos o equipo sin costo",
+            "-Apps ilimitadas + llamadas a EUA y Canada", "",
+            "No queremos que te quedes sin esta mejora, respondenos:",
+            "1)\ud83d\udcb0Quiero pagar menos y mejorar mi plan\ud83d\udcb0",
+            "2)\ud83d\udcf1Me interesa cotizar un equipo\ud83d\udcf1",
+            "3)No deseo ser contactado por este medio") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Actualizacion importante\ud83d\udea8", "",
+            "Te recordamos que tu plan *" + c.planName + "* ya tiene disponible una mejora: *tu tarifa " + c.tarifaBajo + "* y ademas " + c.incremento + " a *" + c.pGb + " GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "Tu respuesta es importante para nosotros, elige un numero \ud83d\udea8",
+            "1)*Si quiero pagar menos*\ud83d\udcb0\ud83d\udcb0\ud83d\udcb0",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
       ]
     },
-
     urgencia: {
-      tip: `<b>Urgencia:</b> Ultimo intento. Usa escasez y datos concretos para motivar la accion inmediata.`,
+      tip: "<b>Urgencia:</b> Ultimo intento. Usa escasez y datos concretos para motivar la accion inmediata.",
       messages: [
-        {
-          tag: 'Opcion A — Ultimo aviso con comparacion',
-          text: `⚠️ Ultimo aviso sobre tu actualizacion AT&T.
-
-Tu plan *${planKey}* ya puede migrar a *${pName}* con mejores beneficios:
-
-❌ Hoy: *${gb} GB* + redes sociales — *$${renta}/mes*
-✅ Nuevo: *${pGb} GB* + 6 apps ilimitadas + EUA/Canada — *$${pRenta}/mes*
-
-${savesOrPaysMore ? `Son *$${savingYear} de ahorro al año*.` : `${gbMult}x mas datos por ${saving === 0 ? 'el mismo precio' : 'casi lo mismo'}.`}
-
-Esta promocion vence pronto. Despues tu linea se queda sin posibilidad de mejora en estas condiciones.
-
-Responde *SI* para activarlo hoy ✅`
-        },
-        {
-          tag: 'Opcion B — Social proof breve',
-          text: `Esta semana cientos de clientes AT&T con plan *${planType}* ya actualizaron su servicio 🚀
-
-Pasaron de *${gb} GB* a *${pGb} GB* ${savesOrPaysMore ? `ahorrando *$${saving}/mes*` : 'sin pagar mas'}.
-
-No te quedes con el plan anterior. Responde *SI* y lo activamos en 5 minutos. Sin ir a tienda 🙌`
-        },
-        {
-          tag: 'Opcion C — Interactivo con opciones',
-          text: `⚠️ Ultima oportunidad!
-Tu plan *${planKey}* esta por perder la posibilidad de actualizar a *Premium*💎
-
-Lo que esta en juego:
--Pasarias de *${gb} GB* a *${pGb} GB* de navegacion
-${savesOrPaysMore ? `-Ahorrarias *$${saving}/mes* ($${savingYear} al año)` : `-Tu tarifa seria de *$${pRenta}/mes*`}
--Descuentos exclusivos en equipos nuevos o equipo sin costo
--Apps ilimitadas + llamadas a EUA y Canada
-
-Esta oferta vence pronto y no podremos garantizar las mismas condiciones despues.
-
-Responde antes de que cierre:
-1)💰Si! Quiero la mejora💰
-2)📱Me interesa un equipo nuevo📱
-3)No deseo ser contactado por este medio`
-        },
-        {
-          tag: 'Opcion D — Alerta con multiples opciones',
-          text: `🚨Actualizacion importante — Ultimo aviso🚨
-
-Tu plan *${planKey}* esta en sus ultimos dias para actualizar. *Tu tarifa ${savesOrPaysMore ? `bajo a tan solo $${pRenta}` : `sera de tan solo $${pRenta}`}* y ademas ${savesOrPaysMore ? 'incremento' : 'tendras'} a *${pGb} GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.
-
-📢‼️ Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres ‼️📢
-
-No dejes pasar esta oportunidad, elige un numero 🚨
-1)*Si quiero pagar menos*💰💰💰
-2)*Me gustaria cotizar 🤑 un equipo*📲
-3)*Requiero una linea adicional*
-4)*Quiero mas informacion* 🤩
-5) Deseo que no me contacten por este medio
-
-*AT&T cambia el juego* 😉`
-        }
+        { tag: "Opcion A \u2014 Ultimo aviso",
+          text: L("\u26a0\ufe0f Ultimo aviso sobre tu actualizacion AT&T.", "",
+            "Tu plan *" + c.planName + "* ya puede migrar a *" + c.pName + "* con mejores beneficios:", "",
+            "\u274c Hoy: *" + c.gb + " GB* + redes sociales \u2014 *$" + c.renta + "/mes*",
+            "\u2705 Nuevo: *" + c.pGb + " GB* + 6 apps ilimitadas + EUA/Canada \u2014 *$" + c.pRenta + "/mes*", "",
+            c.sonAhorro, "",
+            "Esta promocion vence pronto. Despues tu linea se queda sin posibilidad de mejora en estas condiciones.", "",
+            "Responde *SI* para activarlo hoy \u2705") },
+        { tag: "Opcion B \u2014 Social proof breve",
+          text: L("Esta semana cientos de clientes AT&T con plan *" + c.planLabel + "* ya actualizaron su servicio \ud83d\ude80", "",
+            "Pasaron de *" + c.gb + " GB* a *" + c.pGb + " GB* " + c.ahorrandoFrase + ".", "",
+            "No te quedes con el plan anterior. Responde *SI* y lo activamos en 5 minutos. Sin ir a tienda \ud83d\ude4c") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L("\u26a0\ufe0f Ultima oportunidad!",
+            "Tu plan *" + c.planName + "* esta por perder la posibilidad de actualizar a *Premium*\ud83d\udc8e", "",
+            "Lo que esta en juego:",
+            "-Pasarias de *" + c.gb + " GB* a *" + c.pGb + " GB* de navegacion",
+            c.ahorroLinea,
+            "-Descuentos exclusivos en equipos nuevos o equipo sin costo",
+            "-Apps ilimitadas + llamadas a EUA y Canada", "",
+            "Esta oferta vence pronto y no podremos garantizar las mismas condiciones despues.", "",
+            "Responde antes de que cierre:",
+            "1)\ud83d\udcb0Si! Quiero la mejora\ud83d\udcb0",
+            "2)\ud83d\udcf1Me interesa un equipo nuevo\ud83d\udcf1",
+            "3)No deseo ser contactado por este medio") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Actualizacion importante \u2014 Ultimo aviso\ud83d\udea8", "",
+            "Tu plan *" + c.planName + "* esta en sus ultimos dias para actualizar. *Tu tarifa " + c.tarifaBajo + "* y ademas " + c.incremento + " a *" + c.pGb + " GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "No dejes pasar esta oportunidad, elige un numero \ud83d\udea8",
+            "1)*Si quiero pagar menos*\ud83d\udcb0\ud83d\udcb0\ud83d\udcb0",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
       ]
     },
-
     beneficios: {
-      tip: `<b>Solo beneficios:</b> No menciona precios. Util cuando no quieres que el precio sea el foco o cuando el ahorro es minimo. Enfocate en lo que gana.`,
+      tip: "<b>Solo beneficios:</b> No menciona precios. Util cuando el ahorro es minimo. Enfocate en lo que gana.",
       messages: [
-        {
-          tag: 'Opcion A — Enfocado en mejoras',
-          text: `Hola 👋 Te contactamos de AT&T con buenas noticias.
-
-Tu plan *${planKey}* ya tiene disponible una actualizacion con mejores beneficios:
-
-✅ Mas gigas de navegacion libre
-✅ 6 apps completamente ilimitadas (WhatsApp, Facebook, Instagram, TikTok y mas)
-✅ Llamadas y mensajes ilimitados a Mexico, EUA y Canada
-✅ Conservas tu mismo numero
-
-Todo sin ir a tienda y en menos de 5 minutos 📲
-
-Te gustaria conocer los detalles? Responde SI y te explico.`
-        },
-        {
-          tag: 'Opcion B — Pregunta gancho',
-          text: `Hola 👋 Pregunta rapida:
-
-Tu plan AT&T actual tiene llamadas a Estados Unidos y Canada? Y apps de streaming ilimitadas?
-
-Si la respuesta es no, tu plan ya puede actualizarse a uno que SI incluye todo eso ✅
-
-Quieres que te cuente como funciona? Solo toma 2 minutos.`
-        },
-        {
-          tag: 'Opcion C — Interactivo con opciones',
-          text: `Hola!👋
-Tenemos noticias para ti de parte de AT&T💎
-
-Tu plan *${planKey}* ya puede actualizarse a un plan *Premium* con beneficios superiores:
--*${pGb} GB* de navegacion libre
--6 apps completamente ilimitadas
--Llamadas y mensajes a Mexico, EUA y Canada
--Acceso a descuentos increibles en equipos o reclama tu equipo sin costo como cliente
-
-AT&T quiere darte lo mejor y por ello tu respuesta es valiosa para mejorar, responde:
-1)💰Me interesa mejorar mi plan💰
-2)📱Quiero cotizar un equipo📱
-3)No deseo ser contactado por este medio`
-        },
-        {
-          tag: 'Opcion D — Alerta con multiples opciones',
-          text: `🚨Actualizacion importante🚨
-
-Es hora de actualizar tu plan ya que *tu tarifa ${savesOrPaysMore ? `bajo a tan solo $${pRenta}` : `sera de tan solo $${pRenta}`}* y ademas ${savesOrPaysMore ? 'incremento' : 'tendras'} a *${pGb} GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.
-
-📢‼️ Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres ‼️📢
-
-Tu respuesta es importante para nosotros, elige un numero 🚨
-1)*Si quiero pagar menos*💰💰💰
-2)*Me gustaria cotizar 🤑 un equipo*📲
-3)*Requiero una linea adicional*
-4)*Quiero mas informacion* 🤩
-5) Deseo que no me contacten por este medio
-
-*AT&T cambia el juego* 😉`
-        }
+        { tag: "Opcion A \u2014 Enfocado en mejoras",
+          text: L("Hola \ud83d\udc4b Te contactamos de AT&T con buenas noticias.", "",
+            "Tu plan *" + c.planName + "* ya tiene disponible una actualizacion con mejores beneficios:", "",
+            "\u2705 Mas gigas de navegacion libre",
+            "\u2705 6 apps completamente ilimitadas (WhatsApp, Facebook, Instagram, TikTok y mas)",
+            "\u2705 Llamadas y mensajes ilimitados a Mexico, EUA y Canada",
+            "\u2705 Conservas tu mismo numero", "",
+            "Todo sin ir a tienda y en menos de 5 minutos \ud83d\udcf2", "",
+            "Te gustaria conocer los detalles? Responde SI y te explico.") },
+        { tag: "Opcion B \u2014 Pregunta gancho",
+          text: L("Hola \ud83d\udc4b Pregunta rapida:", "",
+            "Tu plan AT&T actual tiene llamadas a Estados Unidos y Canada? Y apps de streaming ilimitadas?", "",
+            "Si la respuesta es no, tu plan ya puede actualizarse a uno que SI incluye todo eso \u2705", "",
+            "Quieres que te cuente como funciona? Solo toma 2 minutos.") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L("Hola!\ud83d\udc4b",
+            "Tenemos noticias para ti de parte de AT&T\ud83d\udc8e", "",
+            "Tu plan *" + c.planName + "* ya puede actualizarse a un plan *Premium* con beneficios superiores:",
+            "-*" + c.pGb + " GB* de navegacion libre",
+            "-6 apps completamente ilimitadas",
+            "-Llamadas y mensajes a Mexico, EUA y Canada",
+            "-Acceso a descuentos increibles en equipos o reclama tu equipo sin costo como cliente", "",
+            "AT&T quiere darte lo mejor y por ello tu respuesta es valiosa para mejorar, responde:",
+            "1)\ud83d\udcb0Me interesa mejorar mi plan\ud83d\udcb0",
+            "2)\ud83d\udcf1Quiero cotizar un equipo\ud83d\udcf1",
+            "3)No deseo ser contactado por este medio") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Actualizacion importante\ud83d\udea8", "",
+            "Es hora de actualizar tu plan ya que *tu tarifa " + c.tarifaBajo + "* y ademas " + c.incremento + " a *" + c.pGb + " GB* libres para navegar. Adicional puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "Tu respuesta es importante para nosotros, elige un numero \ud83d\udea8",
+            "1)*Si quiero pagar menos*\ud83d\udcb0\ud83d\udcb0\ud83d\udcb0",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
       ]
     }
   };
+  return templates[selectedMassScenario];
+}
 
-  const result = templates[selectedMassScenario];
-  renderMassResults(planKey, renta, gb, premium, result);
-  } catch(e) { alert('Error al generar masivo: ' + e.message); console.error(e); }
+// ================================================================
+// GENERATE PERSONAL
+// ================================================================
+function generateMessages() {
+  try {
+    var name = document.getElementById("clientName").value.trim();
+    var planKey = document.getElementById("planAnterior").value;
+    var rentaOvr = document.getElementById("rentaOverride").value.trim();
+    var agent = document.getElementById("agentName").value.trim();
+    var premChoice = document.getElementById("premiumPlan").value;
+    if (!name) { shake("clientName"); return; }
+    if (!planKey) { shake("planAnterior"); return; }
+    var plan = PLANS[planKey];
+    var renta = rentaOvr ? parseInt(rentaOvr.replace(/[^0-9]/g,"")) : plan.renta;
+    var premium;
+    if (premChoice === "auto") { premium = findBestPremium(renta, plan.gb); }
+    else { var p = PREMIUM[premChoice]; premium = {name:premChoice,renta:p.renta,gb:p.gb,saving:renta-p.renta,gbGain:p.gb-plan.gb,gbMultiple:(p.gb/plan.gb).toFixed(1)}; }
+    var data = {name:name, agent:agent||"tu asesor", planName:planKey, planType:plan.type, renta:renta, gb:plan.gb, premium:premium};
+    var result = getMessages(data);
+    renderResults(data, result);
+  } catch(e) { alert("Error: " + e.message); }
+}
+
+// ================================================================
+// GENERATE MASS
+// ================================================================
+function generateMassMessages() {
+  try {
+    var planKey = document.getElementById("massPlan").value;
+    var premChoice = document.getElementById("massPremium").value;
+    if (!planKey) { shake("massPlan"); return; }
+    var plan = PLANS[planKey];
+    var renta = plan.renta, gb = plan.gb;
+    var premium;
+    if (premChoice === "auto") { premium = findBestPremium(renta, gb); }
+    else { var p = PREMIUM[premChoice]; premium = {name:premChoice,renta:p.renta,gb:p.gb,saving:renta-p.renta,gbGain:p.gb-gb,gbMultiple:(p.gb/Math.max(gb,1)).toFixed(1)}; }
+    var result = getMassMessages(planKey, renta, gb, premium);
+    renderMassResults(planKey, renta, gb, premium, result);
+  } catch(e) { alert("Error masivo: " + e.message); }
+}
+
+// ================================================================
+// RENDER
+// ================================================================
+function renderResults(data, result) {
+  var renta=data.renta, gb=data.gb, premium=data.premium, planName=data.planName;
+  var saving=premium.saving, saves=saving>0;
+  var h = "";
+  h += '<div class="comparison"><div class="comparison-title">Comparativa automatica del plan</div>';
+  h += '<div class="compare-grid"><div class="compare-box old"><div class="box-label">Plan Actual</div>';
+  h += '<div class="plan-name">' + planName + '</div><div class="plan-price">$' + renta + '</div>';
+  h += '<div class="plan-data">' + gb + ' GB + redes sociales</div></div>';
+  h += '<div class="compare-arrow">\u2192</div>';
+  h += '<div class="compare-box new"><div class="box-label">Plan Recomendado</div>';
+  h += '<div class="plan-name">' + premium.name + '</div><div class="plan-price">$' + premium.renta + '</div>';
+  h += '<div class="plan-data">' + premium.gb + ' GB + 6 apps + EUA/CAN</div></div></div>';
+  h += '<div class="savings-strip">';
+  h += '<div class="saving-item"><div class="val" style="color:' + (saves?"#10B981":saving===0?"#009FDB":"#F59E0B") + '">' + (saves?"-$"+saving+"/mes":saving===0?"$0":"+$"+Math.abs(saving)+"/mes") + '</div><div class="lbl">' + (saves?"Ahorro mensual":saving===0?"Mismo precio":"Diferencia") + '</div></div>';
+  h += '<div class="saving-item"><div class="val" style="color:#009FDB">' + premium.gbMultiple + 'x</div><div class="lbl">Mas datos</div></div>';
+  h += '<div class="saving-item"><div class="val" style="color:#10B981">' + premium.gb + ' GB</div><div class="lbl">Navegacion libre</div></div>';
+  if (saves) h += '<div class="saving-item"><div class="val" style="color:#10B981">$' + (saving*12) + '/a\u00f1o</div><div class="lbl">Ahorro anual</div></div>';
+  h += '</div></div>';
+  h += '<div class="scenario-tip"><div class="tip-icon">\ud83d\udca1</div><div class="tip-text">' + result.tip + '</div></div>';
+  var tags = ["tag-a","tag-b","tag-c","tag-d"];
+  var now = new Date();
+  var timeStr = ("0"+now.getHours()).slice(-2) + ":" + ("0"+now.getMinutes()).slice(-2);
+  for (var i = 0; i < result.messages.length; i++) {
+    var msg = result.messages[i];
+    h += '<div class="msg-card"><div class="msg-header"><span class="tag ' + tags[i] + '">' + msg.tag + '</span>';
+    h += '<button class="btn-copy" onclick="copyMsg(this,' + i + ',false)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar mensaje</button>';
+    h += '</div><div class="wa-bubble-container"><div class="wa-bubble">' + msg.text + '<div class="wa-time">' + timeStr + ' \u2713\u2713</div></div></div></div>';
+  }
+  document.getElementById("results").innerHTML = h;
+  window._msgs = result.messages;
 }
 
 function renderMassResults(planName, renta, gb, premium, result) {
-  const saving = premium.saving;
-  const savesOrPaysMore = saving > 0;
-
-  let html = '';
-
-  // Comparison
-  html += `<div class="comparison">
-    <div class="comparison-title">Comparativa del grupo: ${planName}</div>
-    <div class="compare-grid">
-      <div class="compare-box old">
-        <div class="box-label">Plan Actual</div>
-        <div class="plan-name">${planName}</div>
-        <div class="plan-price">$${renta}</div>
-        <div class="plan-data">${gb} GB + redes sociales</div>
-      </div>
-      <div class="compare-arrow">→</div>
-      <div class="compare-box new">
-        <div class="box-label">Plan Premium</div>
-        <div class="plan-name">${premium.name}</div>
-        <div class="plan-price">$${premium.renta}</div>
-        <div class="plan-data">${premium.gb} GB + 6 apps + EUA/CAN</div>
-      </div>
-    </div>
-    <div class="savings-strip">
-      <div class="saving-item"><div class="val" style="color:${savesOrPaysMore?'#10B981':saving===0?'var(--att)':'#F59E0B'}">${savesOrPaysMore?'-$'+saving+'/mes':saving===0?'$0':'+$'+Math.abs(saving)+'/mes'}</div><div class="lbl">${savesOrPaysMore?'Ahorro mensual':saving===0?'Mismo precio':'Diferencia'}</div></div>
-      <div class="saving-item"><div class="val" style="color:#009FDB">${premium.gbMultiple}x</div><div class="lbl">Mas datos</div></div>
-      <div class="saving-item"><div class="val" style="color:#10B981">${premium.gb} GB</div><div class="lbl">Navegacion libre</div></div>
-      ${savesOrPaysMore?`<div class="saving-item"><div class="val" style="color:#10B981">$${saving*12}/año</div><div class="lbl">Ahorro anual</div></div>`:''}
-    </div>
-  </div>`;
-
-  // Tip
-  html += `<div class="scenario-tip"><div class="tip-icon">💡</div><div class="tip-text">${result.tip}</div></div>`;
-
-  // Messages
-  result.messages.forEach((msg, i) => {
-    const tagClass = ['tag-a','tag-b','tag-c','tag-d'][i] || 'tag-a';
-    const now = new Date();
-    const timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-    html += `<div class="msg-card">
-      <div class="msg-header">
-        <span class="tag ${tagClass}">${msg.tag}</span>
-        <button class="btn-copy" onclick="copyMassMessage(this, ${i})">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copiar mensaje
-        </button>
-      </div>
-      <div class="wa-bubble-container">
-        <div class="wa-bubble">${msg.text}<div class="wa-time">${timeStr} ✓✓</div></div>
-      </div>
-    </div>`;
-  });
-
-  document.getElementById('mass-results').innerHTML = html;
-  window._massMessages = result.messages.map(m => m.text);
+  var saving=premium.saving, saves=saving>0;
+  var h = "";
+  h += '<div class="comparison"><div class="comparison-title">Comparativa del grupo: ' + planName + '</div>';
+  h += '<div class="compare-grid"><div class="compare-box old"><div class="box-label">Plan Actual</div>';
+  h += '<div class="plan-name">' + planName + '</div><div class="plan-price">$' + renta + '</div>';
+  h += '<div class="plan-data">' + gb + ' GB + redes sociales</div></div>';
+  h += '<div class="compare-arrow">\u2192</div>';
+  h += '<div class="compare-box new"><div class="box-label">Plan Premium</div>';
+  h += '<div class="plan-name">' + premium.name + '</div><div class="plan-price">$' + premium.renta + '</div>';
+  h += '<div class="plan-data">' + premium.gb + ' GB + 6 apps + EUA/CAN</div></div></div>';
+  h += '<div class="savings-strip">';
+  h += '<div class="saving-item"><div class="val" style="color:' + (saves?"#10B981":saving===0?"#009FDB":"#F59E0B") + '">' + (saves?"-$"+saving+"/mes":saving===0?"$0":"+$"+Math.abs(saving)+"/mes") + '</div><div class="lbl">' + (saves?"Ahorro mensual":saving===0?"Mismo precio":"Diferencia") + '</div></div>';
+  h += '<div class="saving-item"><div class="val" style="color:#009FDB">' + premium.gbMultiple + 'x</div><div class="lbl">Mas datos</div></div>';
+  h += '<div class="saving-item"><div class="val" style="color:#10B981">' + premium.gb + ' GB</div><div class="lbl">Navegacion libre</div></div>';
+  if (saves) h += '<div class="saving-item"><div class="val" style="color:#10B981">$' + (saving*12) + '/a\u00f1o</div><div class="lbl">Ahorro anual</div></div>';
+  h += '</div></div>';
+  h += '<div class="scenario-tip"><div class="tip-icon">\ud83d\udca1</div><div class="tip-text">' + result.tip + '</div></div>';
+  var tags = ["tag-a","tag-b","tag-c","tag-d"];
+  var now = new Date();
+  var timeStr = ("0"+now.getHours()).slice(-2) + ":" + ("0"+now.getMinutes()).slice(-2);
+  for (var i = 0; i < result.messages.length; i++) {
+    var msg = result.messages[i];
+    h += '<div class="msg-card"><div class="msg-header"><span class="tag ' + tags[i] + '">' + msg.tag + '</span>';
+    h += '<button class="btn-copy" onclick="copyMsg(this,' + i + ',true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar mensaje</button>';
+    h += '</div><div class="wa-bubble-container"><div class="wa-bubble">' + msg.text + '<div class="wa-time">' + timeStr + ' \u2713\u2713</div></div></div></div>';
+  }
+  document.getElementById("mass-results").innerHTML = h;
+  window._massMsgs = result.messages;
 }
 
-function copyMassMessage(btn, idx) {
+// ================================================================
+// COPY (Safari iOS safe)
+// ================================================================
+function copyMsg(btn, idx, isMass) {
   try {
-    var waText = window._massMessages[idx].replace(/\n{3,}/g, '\n\n');
-    doCopy(waText);
-    btn.classList.add('copied');
+    var msgs = isMass ? window._massMsgs : window._msgs;
+    var text = msgs[idx].text.replace(/\n{3,}/g, "\n\n");
+    // Fallback copy method that works everywhere
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    ta.style.top = "-9999px";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    btn.className = "btn-copy copied";
     btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Copiado!';
     showToast();
     setTimeout(function() {
-      btn.classList.remove('copied');
+      btn.className = "btn-copy";
       btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar mensaje';
     }, 2000);
-  } catch(e) { alert('Error al copiar: ' + e.message); }
+  } catch(e) { alert("Error al copiar: " + e.message); }
 }
 
-// Add shake animation
-const style = document.createElement('style');
-style.textContent = `@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}`;
-document.head.appendChild(style);
-// Error detection for debugging
-window.onerror = function(msg, url, line, col, error) {
-  alert('Error en linea ' + line + ': ' + msg);
-  return false;
-};
+function showToast() {
+  var t = document.getElementById("toast");
+  t.classList.add("show");
+  setTimeout(function() { t.classList.remove("show"); }, 2500);
+}
+
+// ================================================================
+// TABS
+// ================================================================
+function switchTab(tab) {
+  var btns = document.querySelectorAll(".tab-btn");
+  btns[0].classList.toggle("active", tab === "personal");
+  btns[1].classList.toggle("active", tab === "masivo");
+  btns[2].classList.toggle("active", tab === "renovacion");
+  document.getElementById("tab-personal").classList.toggle("active", tab === "personal");
+  document.getElementById("tab-masivo").classList.toggle("active", tab === "masivo");
+  document.getElementById("tab-renovacion").classList.toggle("active", tab === "renovacion");
+}
+
+// ================================================================
+// AUTO HINTS
+// ================================================================
+document.getElementById("planAnterior").addEventListener("change", function() {
+  var k = this.value;
+  if (!k) { document.getElementById("premium-hint").textContent = ""; return; }
+  var plan = PLANS[k], ro = document.getElementById("rentaOverride").value.trim();
+  var r = ro ? parseInt(ro.replace(/[^0-9]/g,"")) : plan.renta;
+  var b = findBestPremium(r, plan.gb);
+  if (b) document.getElementById("premium-hint").innerHTML = "\ud83d\udca1 Sugerencia: <b>" + b.name + "</b> ($" + b.renta + "/mes, " + b.gb + " GB) \u2014 " + (b.saving>0?"ahorra $"+b.saving+"/mes":b.saving===0?"mismo precio":"solo $"+Math.abs(b.saving)+" mas");
+});
+document.getElementById("massPlan").addEventListener("change", function() {
+  var k = this.value;
+  if (!k) { document.getElementById("mass-premium-hint").textContent = ""; return; }
+  var plan = PLANS[k];
+  var b = findBestPremium(plan.renta, plan.gb);
+  if (b) document.getElementById("mass-premium-hint").innerHTML = "\ud83d\udca1 Sugerencia: <b>" + b.name + "</b> ($" + b.renta + "/mes, " + b.gb + " GB) \u2014 " + (b.saving>0?"ahorra $"+b.saving+"/mes":b.saving===0?"mismo precio":"solo $"+Math.abs(b.saving)+" mas");
+});
+
+function shake(id) {
+  var el = document.getElementById(id);
+  el.style.borderColor = "#EF4444";
+  el.style.animation = "shake .4s ease";
+  setTimeout(function() { el.style.animation = ""; el.style.borderColor = ""; }, 500);
+}
+
+// ================================================================
+// RENOVATION PREMIUM
+// ================================================================
+var selectedRenScenario = "primer_contacto";
+
+function selectRenScenario(btn) {
+  var btns = document.querySelectorAll("[data-ren-scenario]");
+  for (var i=0;i<btns.length;i++) btns[i].classList.remove("active");
+  btn.classList.add("active");
+  selectedRenScenario = btn.getAttribute("data-ren-scenario");
+}
+
+function getRenMessages(planKey, planData, firstName, agent) {
+  var pName = planKey;
+  var pRenta = planData.renta;
+  var pGb = planData.gb;
+  var greeting = firstName ? ("Hola " + firstName) : "Hola";
+  var greetingBang = firstName ? ("Hola " + firstName + "!") : "Hola!";
+  var nameComma = firstName ? (firstName + ", ") : "";
+  var agentLine = agent ? (" Te saluda " + agent + " de AT&T.") : " Te contactamos de AT&T.";
+
+  var templates = {
+    primer_contacto: {
+      tip: "<b>Tip:</b> El cliente Premium ya conoce AT&T. El gancho aqui es el equipo, no el plan. Ve directo al beneficio.",
+      messages: [
+        { tag: "Opcion A \u2014 Directo al equipo",
+          text: L(greeting + " \ud83d\udc4b" + agentLine, "",
+            "Te contacto porque tu plan *" + pName + "* ya tiene disponible su renovacion y con ella vienen beneficios exclusivos:", "",
+            "\ud83d\udcf1 *Equipo sin costo* \u2014 reclama el dispositivo que te corresponde como cliente Premium",
+            "\ud83d\udcb0 *Descuentos especiales* \u2014 o si prefieres, elige el equipo que quieras de las mejores marcas con descuentos increibles",
+            "\u2705 *Mismo plan* \u2014 conservas tu " + pName + " con *" + pGb + " GB* a *$" + pRenta + "/mes*", "",
+            "Todo por telefono en 5 minutos, sin ir a tienda. Te interesa? \ud83d\udcf2") },
+        { tag: "Opcion B \u2014 Pregunta gancho",
+          text: L(greeting + " \ud83d\udc4b", "",
+            "Sabias que como cliente *" + pName + "* tienes derecho a un equipo sin costo o con descuentos exclusivos al renovar?", "",
+            "Tu plan se mantiene igual: *" + pGb + " GB* a *$" + pRenta + "/mes*. El beneficio extra es el equipo.", "",
+            "Quieres saber que opciones tienes? Respondeme SI \u2705") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L(greetingBang + "\ud83d\udc4b",
+            "Tu plan *" + pName + "* ya cumplio su vigencia y es momento de renovar para aprovechar tus beneficios Premium\ud83d\udc8e", "",
+            "Al renovar obtienes:",
+            "-Tu plan se mantiene: *" + pGb + " GB* + 6 apps ilimitadas + llamadas a EUA/Canada",
+            "-Equipo sin costo incluido o descuentos increibles en las mejores marcas",
+            "-Sin cambios en tu tarifa de *$" + pRenta + "/mes*", "",
+            "Tu respuesta es valiosa para nosotros, responde:",
+            "1)\ud83d\udcf1Quiero reclamar mi equipo sin costo\ud83d\udcf1",
+            "2)\ud83e\udd11Me interesa cotizar un equipo con descuento\ud83e\udd11",
+            "3)No deseo ser contactado por este medio") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Renovacion disponible\ud83d\udea8", "",
+            nameComma + "tu plan *" + pName + "* ya esta listo para renovar. Conservas tu mismo plan con *" + pGb + " GB* a *$" + pRenta + "/mes* y ademas puedes elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "Tu respuesta es importante para nosotros, elige un numero \ud83d\udea8",
+            "1)*Quiero mi equipo sin costo*\ud83d\udcf1",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
+      ]
+    },
+    seguimiento: {
+      tip: "<b>Tip:</b> El cliente ya sabe que puede renovar. Recuerdale el equipo y genera un poco de urgencia.",
+      messages: [
+        { tag: "Opcion A \u2014 Recordatorio",
+          text: L(greeting + ", te escribimos hace unos dias sobre la renovacion de tu plan *" + pName + "* \ud83d\udcf1", "",
+            "Solo para recordarte: al renovar puedes llevarte un *equipo sin costo* o elegir el que prefieras con *descuentos exclusivos*.", "",
+            "Tu plan se queda exactamente igual: *" + pGb + " GB* a *$" + pRenta + "/mes*. Solo ganas el equipo \ud83d\ude4c", "",
+            "Te interesa? Respondeme y lo coordinamos rapido.") },
+        { tag: "Opcion B \u2014 Breve",
+          text: L("\ud83d\udc4b " + (firstName || "Hola") + ", tu renovacion Premium sigue disponible.", "",
+            "Plan *" + pName + "* + equipo sin costo o con descuento.", "",
+            "Responde *SI* y te explico las opciones \u2705") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L("Hola de nuevo" + (firstName ? " " + firstName : "") + "!\ud83d\udc4b",
+            "Tu renovacion *" + pName + "* sigue disponible\ud83d\udc8e", "",
+            "Recuerda lo que obtienes al renovar:",
+            "-Mismo plan: *" + pGb + " GB* + apps ilimitadas + EUA/Canada",
+            "-Equipo sin costo o descuentos increibles en smartphones",
+            "-Misma tarifa de *$" + pRenta + "/mes*", "",
+            "No queremos que pierdas este beneficio, respondenos:",
+            "1)\ud83d\udcf1Quiero mi equipo sin costo\ud83d\udcf1",
+            "2)\ud83e\udd11Me interesa cotizar un equipo\ud83e\udd11",
+            "3)No deseo ser contactado por este medio") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Recordatorio de renovacion\ud83d\udea8", "",
+            nameComma + "te recordamos que tu plan *" + pName + "* ya puede renovarse. Conservas *" + pGb + " GB* a *$" + pRenta + "/mes* y ademas puedes elegir entre llevarte un dispositivo sin costo o elegir el equipo que gustes con descuentos en las mejores marcas.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "Elige un numero \ud83d\udea8",
+            "1)*Quiero mi equipo sin costo*\ud83d\udcf1",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
+      ]
+    },
+    equipo: {
+      tip: "<b>Tip:</b> Aqui el foco es 100% el equipo. Ideal cuando sabes que el cliente quiere cambiar de celular.",
+      messages: [
+        { tag: "Opcion A \u2014 Equipo sin costo",
+          text: L(greeting + " \ud83d\udc4b", "",
+            "Como cliente *" + pName + "* tienes un beneficio pendiente: tu *equipo sin costo* \ud83d\udcf1", "",
+            "Al renovar tu plan (que se queda igual en *$" + pRenta + "/mes* con *" + pGb + " GB*), puedes elegir entre:", "",
+            "\ud83c\udd93 Un dispositivo *completamente gratis*",
+            "\ud83d\udcb2 O el equipo que prefieras (iPhone, Samsung, Motorola y mas) con *descuentos exclusivos* que no encontraras en tienda", "",
+            "Lo tramitamos en 5 minutos por telefono. Quieres ver las opciones? \ud83d\udcf2") },
+        { tag: "Opcion B \u2014 Marcas y descuentos",
+          text: L(greeting + " \ud83d\udc4b", "",
+            "Tu plan *" + pName + "* ya puede renovarse y tienes acceso a descuentos en equipos de las mejores marcas:", "",
+            "\ud83d\udcf1 iPhone \u2022 Samsung \u2022 Motorola \u2022 Xiaomi", "",
+            "Puedes llevarte un equipo *sin costo* o financiar el que prefieras con descuentos que solo aplican para clientes Premium.", "",
+            "Tu plan no cambia: *" + pGb + " GB* a *$" + pRenta + "/mes*.", "",
+            "Quieres que te cotice alguno? Dime que marca te interesa \ud83d\ude09") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L(greetingBang + "\ud83d\udc4b",
+            "Tienes un equipo esperandote como cliente *" + pName + "*\ud83d\udc8e", "",
+            "Al renovar tu plan puedes elegir:",
+            "-\ud83c\udd93 Equipo *sin costo* incluido",
+            "-\ud83d\udcb2 Equipo de marca premium (iPhone, Samsung, etc.) con *descuentos increibles*",
+            "-Tu plan se mantiene: *" + pGb + " GB* a *$" + pRenta + "/mes*", "",
+            "Que te gustaria hacer?",
+            "1)\ud83d\udcf1Quiero reclamar mi equipo sin costo\ud83d\udcf1",
+            "2)\ud83e\udd11Quiero cotizar un iPhone/Samsung/otro\ud83e\udd11",
+            "3)No deseo ser contactado por este medio") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Equipo disponible para ti\ud83d\udea8", "",
+            nameComma + "como cliente *" + pName + "* tienes derecho a elegir entre llevarte un dispositivo sin costo o bien elegir el equipo que gustes aprovechando nuestros descuentos en las mejores marcas. Tu plan se mantiene en *" + pGb + " GB* a *$" + pRenta + "/mes*.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "Tu respuesta es importante para nosotros, elige un numero \ud83d\udea8",
+            "1)*Quiero mi equipo sin costo*\ud83d\udcf1",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
+      ]
+    },
+    urgencia: {
+      tip: "<b>Tip:</b> Ultimo intento. El cliente pierde su equipo si no renueva. Usa escasez.",
+      messages: [
+        { tag: "Opcion A \u2014 Ultimo aviso",
+          text: L("\u26a0\ufe0f " + (firstName || "Hola") + ", ultimo aviso sobre tu renovacion *" + pName + "*.", "",
+            "Tu beneficio de equipo esta por vencer:", "",
+            "\ud83d\udcf1 Equipo sin costo \u2014 *disponible solo al renovar*",
+            "\ud83d\udcb2 Descuentos exclusivos en iPhone, Samsung y mas \u2014 *solo para clientes Premium*", "",
+            "Si no renuevas, pierdes el acceso a estos beneficios y no podemos garantizar las mismas condiciones despues.", "",
+            "Tu plan sigue igual: *" + pGb + " GB* a *$" + pRenta + "/mes*. Solo ganas.", "",
+            "Lo activamos? Responde *SI* \u2705") },
+        { tag: "Opcion B \u2014 Social proof",
+          text: L("Esta semana muchos clientes *" + pName + "* ya renovaron y se llevaron su equipo nuevo \ud83d\ude80", "",
+            "Tu renovacion sigue disponible pero tiene fecha limite \u23f3", "",
+            "Plan igual (*" + pGb + " GB, $" + pRenta + "/mes*) + equipo sin costo o con descuento.", "",
+            "Responde *SI* antes de que cierre y lo tramitamos en 5 minutos \ud83d\ude4c") },
+        { tag: "Opcion C \u2014 Interactivo con opciones",
+          text: L("\u26a0\ufe0f Ultima oportunidad" + (firstName ? " " + firstName : "") + "!",
+            "Tu renovacion *" + pName + "* esta por vencer\ud83d\udc8e", "",
+            "Lo que pierdes si no renuevas:",
+            "-Equipo sin costo que te corresponde",
+            "-Descuentos exclusivos en smartphones premium",
+            "-Posibilidad de linea adicional", "",
+            "Tu plan se mantiene igual, solo ganas beneficios.", "",
+            "Responde antes de que cierre:",
+            "1)\ud83d\udcf1Si! Quiero mi equipo\ud83d\udcf1",
+            "2)\ud83e\udd11Quiero cotizar un equipo premium\ud83e\udd11",
+            "3)No deseo ser contactado por este medio") },
+        { tag: "Opcion D \u2014 Alerta con multiples opciones",
+          text: L("\ud83d\udea8Ultimo aviso de renovacion\ud83d\udea8", "",
+            nameComma + "tu plan *" + pName + "* esta en sus ultimos dias para renovar. No pierdas tu equipo sin costo ni los descuentos exclusivos en las mejores marcas. Tu plan se mantiene en *" + pGb + " GB* a *$" + pRenta + "/mes*.", "",
+            "\ud83d\udce2\u203c\ufe0f Tambien recuerda que puedes adquirir una linea adicional sin plazo establecido si asi lo requieres \u203c\ufe0f\ud83d\udce2", "",
+            "No dejes pasar esta oportunidad, elige un numero \ud83d\udea8",
+            "1)*Quiero mi equipo sin costo*\ud83d\udcf1",
+            "2)*Me gustaria cotizar \ud83e\udd11 un equipo*\ud83d\udcf2",
+            "3)*Requiero una linea adicional*",
+            "4)*Quiero mas informacion* \ud83e\udd29",
+            "5) Deseo que no me contacten por este medio", "",
+            "*AT&T cambia el juego* \ud83d\ude09") }
+      ]
+    }
+  };
+  return templates[selectedRenScenario];
+}
+
+function generateRenMessages() {
+  try {
+    var planKey = document.getElementById("renPlan").value;
+    var name = document.getElementById("renName").value.trim();
+    var agent = document.getElementById("renAgent").value.trim();
+    if (!planKey) { shake("renPlan"); return; }
+    var planData = PREMIUM[planKey];
+    var firstName = name ? name.split(" ")[0] : "";
+    var result = getRenMessages(planKey, planData, firstName, agent);
+    renderRenResults(planKey, planData, result);
+  } catch(e) { alert("Error renovacion: " + e.message); }
+}
+
+function renderRenResults(planKey, planData, result) {
+  var h = "";
+  // Plan card (no comparison needed, same plan)
+  h += '<div class="comparison" style="border-color:rgba(139,92,246,0.2)">';
+  h += '<div class="comparison-title" style="color:var(--purple)">Renovacion: ' + planKey + '</div>';
+  h += '<div style="display:flex;justify-content:center;gap:30px;padding:10px 0">';
+  h += '<div class="saving-item"><div class="val" style="color:var(--purple)">' + planKey + '</div><div class="lbl">Plan actual = Plan renovado</div></div>';
+  h += '<div class="saving-item"><div class="val" style="color:#10B981">' + planData.gb + ' GB</div><div class="lbl">Se mantiene</div></div>';
+  h += '<div class="saving-item"><div class="val" style="color:#009FDB">$' + planData.renta + '/mes</div><div class="lbl">Misma tarifa</div></div>';
+  h += '<div class="saving-item"><div class="val" style="color:#F59E0B">\ud83d\udcf1</div><div class="lbl">+ Equipo</div></div>';
+  h += '</div></div>';
+  h += '<div class="scenario-tip"><div class="tip-icon">\ud83d\udca1</div><div class="tip-text">' + result.tip + '</div></div>';
+  var tags = ["tag-a","tag-b","tag-c","tag-d"];
+  var now = new Date();
+  var timeStr = ("0"+now.getHours()).slice(-2) + ":" + ("0"+now.getMinutes()).slice(-2);
+  for (var i = 0; i < result.messages.length; i++) {
+    var msg = result.messages[i];
+    h += '<div class="msg-card"><div class="msg-header"><span class="tag ' + tags[i] + '">' + msg.tag + '</span>';
+    h += '<button class="btn-copy" onclick="copyRenMsg(this,' + i + ')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar mensaje</button>';
+    h += '</div><div class="wa-bubble-container"><div class="wa-bubble">' + msg.text + '<div class="wa-time">' + timeStr + ' \u2713\u2713</div></div></div></div>';
+  }
+  document.getElementById("ren-results").innerHTML = h;
+  window._renMsgs = result.messages;
+}
+
+function copyRenMsg(btn, idx) {
+  try {
+    var text = window._renMsgs[idx].text.replace(/\n{3,}/g, "\n\n");
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.left = "-9999px"; ta.style.top = "-9999px"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+    btn.className = "btn-copy copied";
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Copiado!';
+    showToast();
+    setTimeout(function() {
+      btn.className = "btn-copy";
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar mensaje';
+    }, 2000);
+  } catch(e) { alert("Error al copiar: " + e.message); }
+}
+
+// Error handler
+window.onerror = function(msg, url, line) { alert("Error linea " + line + ": " + msg); };
 </script>
 </body>
 </html>
